@@ -7,7 +7,7 @@ import {
 import { ThemeProvider } from "styled-components";
 
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
+import Signup, { action as signupAction } from "./pages/Signup";
 import Login from "./pages/Login";
 
 import theme from "./theme";
@@ -16,7 +16,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/signup" element={<Signup />} action={signupAction} />
       <Route path="/login" element={<Login />} />
     </Route>
   )

@@ -38,10 +38,5 @@ export const Button = styled.button`
   width: 150px;
   height: 50px;
   margin: 30px;
-  border: none;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.colors.blue};
-  font-size: ${({ theme }) => theme.fontSizes.text};
-  color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
+  ${({ theme }) => theme.common.mainButton};
 `;
