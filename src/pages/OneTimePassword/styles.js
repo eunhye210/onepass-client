@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SignupPageLayout = styled.div`
+export const OneTimePasswordPageLayout = styled.div`
   height: 100vh;
 `;
 
@@ -13,15 +13,10 @@ export const Title = styled.h1`
   margin-bottom: 30px;
 `;
 
-export const Message = styled.div`
-  color: ${(props) => props.color};
-  margin-bottom: 10px;
-`;
-
-export const Wrapper = styled.div`
-  width: 373px;
-  ${({ theme }) => theme.display.flex};
-  justify-content: space-between;
+export const Text = styled.h3`
+  width: 650px;
+  margin-bottom: 40px;
+  text-align: center;
 `;
 
 export const Input = styled.input.attrs((props) => ({
@@ -32,14 +27,9 @@ export const Input = styled.input.attrs((props) => ({
   ${({ theme }) => theme.common.mainInput};
 `;
 
-export const Button = styled.button.attrs((props) => ({
-  type: props.type,
-}))`
+export const Button = styled.button`
   width: 80px;
   height: 35px;
-  margin-top: ${(props) => (props.type === "submit" ? "20px" : "0px")};
+  margin-top: 30px;
   ${({ theme }) => theme.common.mainButton};
-  &:disabled {
-    background: #a9a9a9;
-  }
 `;

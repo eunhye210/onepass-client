@@ -7,3 +7,11 @@ export async function confirmEmail(email) {
     data: { email: email },
   });
 }
+
+export async function requestOTP(email) {
+  return apiController({
+    url: "/otp",
+    method: "post",
+    data: email,
+  });
+}

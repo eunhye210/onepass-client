@@ -40,6 +40,16 @@ const common = {
     color: ${"#FFFFFF"};
     cursor: pointer;
   `,
+  mainInput: `
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #021691;
+    border-radius: 10px;
+    font-size: 1em;
+  `
 };
 
 const theme = {
