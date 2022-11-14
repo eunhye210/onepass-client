@@ -13,7 +13,7 @@ function Header({ type }) {
       </S.Wrapper>
       <S.Wrapper>
         <S.Button onClick={() => navigate("/")}>Home</S.Button>
-        {type === "signup" && (
+        {(type === "signup" || type === "otp") && (
           <S.Button onClick={() => navigate("/login")}>Login</S.Button>
         )}
       </S.Wrapper>
