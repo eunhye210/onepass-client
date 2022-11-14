@@ -9,7 +9,8 @@ const fontSizes = {
 const colors = {
   black: "#000000",
   blue: "#021691",
-  white: "#FFFFFF"
+  white: "#FFFFFF",
+  red: "#FF4433",
 };
 
 const display = {
@@ -22,6 +23,22 @@ const display = {
   flexRowCenter: `
     display: flex;
     justify-content: center;
+    align-items: center;
+  `,
+  flex: `
+    display: flex;
+    align-items: center;
+  `,
+};
+
+const common = {
+  mainButton: `
+    border: none;
+    border-radius: 5px;
+    background: ${"#021691"};
+    font-size: 18px;
+    color: ${"#FFFFFF"};
+    cursor: pointer;
   `,
 };
 
@@ -29,6 +46,7 @@ const theme = {
   fontSizes,
   colors,
   display,
+  common,
 };
 
 export default theme;
