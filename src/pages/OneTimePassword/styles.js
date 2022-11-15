@@ -13,10 +13,11 @@ export const Title = styled.h1`
   margin-bottom: 30px;
 `;
 
-export const Text = styled.h3`
-  width: 650px;
+export const Text = styled.div`
+  width: 640px;
   margin-bottom: 40px;
   text-align: center;
+  font-size: 20px;
 `;
 
 export const Input = styled.input.attrs((props) => ({

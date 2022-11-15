@@ -7,6 +7,7 @@ const apiController = axios.create({
 
 apiController.interceptors.request.use(
   function (config) {
+    // srp에 맞게 수정 필요
     const tokenData = "";
     if (tokenData) {
       config.headers["Authorization"] = `Bearer ${tokenData}`;

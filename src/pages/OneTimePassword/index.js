@@ -31,11 +31,11 @@ function OneTimePassword() {
       dispatch(
         setModalOpen({
           title: "Error",
-          message: "An error occurred. Please try again.",
+          message: data.message,
         })
       );
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   return (
     <>
@@ -63,14 +63,12 @@ export default OneTimePassword;
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const otpForm = {
-    email: formData.get("email"),
-  };
+  const email = formData.get("email");
 
   try {
-    await requestOTP(otpForm);
-    return { type: "success", email: formData.get("email") };
+    await requestOTP({ email });
+    return { type: "success", email };
   } catch (err) {
-    return { type: "error" }; // 에러에 따른 내용 보여주기 Internal server error & No account found
+    return { type: "error", message: err };
   }
 }
