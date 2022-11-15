@@ -16,6 +16,9 @@ function Header({ type }) {
         {(type === "signup" || type === "otp") && (
           <S.Button onClick={() => navigate("/login")}>Login</S.Button>
         )}
+        {type === "login" && (
+          <S.Button onClick={() => navigate("/signup")}>Sign Up</S.Button>
+        )}
       </S.Wrapper>
     </S.Header>
   );

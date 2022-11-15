@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form } from "react-router-dom";
+import { Form, redirect, useActionData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import validator from "validator";
 
@@ -8,16 +8,19 @@ import ShowModal from "../../components/ShowModal";
 import MessageModal from "../../components/MessageModal";
 
 import getEmailId from "../../services/getEmailId";
-import { confirmEmail } from "../../services/apiRequests";
+import { signup } from "../../services/apiRequests";
+import { sendConfirmationCodeEmail } from "../../services/apiRequests";
 import validateSignupForm from "../../services/validateSignupForm";
-import { setModalOpen } from "../../store/slices/modalSlice";
 
+import { setModalOpen } from "../../store/slices/modalSlice";
+import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
 import * as S from "./styles";
 
+// 안전한 password 자동 생성 로직 추가
 function Signup() {
+  const data = useActionData();
   const dispatch = useDispatch();
   const { isModalOpen } = useSelector((state) => state.modal);
-
   const [error, setError] = useState();
   const [message, setMessage] = useState();
 
@@ -36,7 +39,7 @@ function Signup() {
     }
 
     try {
-      const data = await confirmEmail(email);
+      const data = await sendConfirmationCodeEmail(email);
       const emailId = getEmailId(email);
 
       dispatch(
@@ -48,8 +51,7 @@ function Signup() {
       setError("");
       setEmailConfirmationCode(data);
     } catch (err) {
-      console.log(err);
-      // setError(err); // 에러 헨들링 수정 필요
+      setError(err);
     }
   };
 
@@ -69,8 +71,9 @@ function Signup() {
         <Form method="post" action="/signup">
           <S.Content>
             <S.Title>Sign Up</S.Title>
+            {data && <S.Message color="red">{data}</S.Message>}
             {error && <S.Message color="red">{error}</S.Message>}
-            {message && <S.Message color="blue">{message}</S.Message>}
+            {message && !data && <S.Message color="blue">{message}</S.Message>}
             <S.Input size="350" name="username" placeholder="Username" />
             <S.Wrapper>
               <S.Input
@@ -103,7 +106,7 @@ function Signup() {
               placeholder="ConfirmPassword"
             />
             <S.Button type="submit" disabled={message ? false : true}>
-              submit
+              Submit
             </S.Button>
           </S.Content>
         </Form>
@@ -123,7 +126,22 @@ export async function action({ request }) {
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
   };
+  const { username, email, password } = signupForm;
 
-  // form 에러 헨들링 후, '/signup' 으로 보내기
   const errors = validateSignupForm(signupForm);
+  if (errors.length > 0) {
+    return errors[0];
+  }
+
+  const srpClient = new SRP6JavascriptClientSessionSHA256();
+  const salt = srpClient.generateRandomSalt();
+  const verifier = srpClient.generateVerifier(salt, email, password);
+
+  try {
+    await signup({ username, email, verifier, salt });
+  } catch (err) {
+    return err;
+  }
+
+  return redirect("/login");
 }
