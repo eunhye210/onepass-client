@@ -38,3 +38,11 @@ export async function login(loginData) {
     data: loginData,
   });
 }
+
+export async function addPassword(userId, passwordForm) {
+  return apiController({
+    url: `/users/${userId}/password`,
+    method: "post",
+    data: passwordForm,
+  });
+}

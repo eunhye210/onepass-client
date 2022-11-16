@@ -17,7 +17,7 @@ const display = {
   flexColumnCenter: `
     display: flex;
     flex-direction: column;
-    justify-contents: center;
+    justify-content: center;
     align-items: center;
   `,
   flexRowCenter: `

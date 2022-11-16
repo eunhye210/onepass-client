@@ -2,15 +2,13 @@ import styled from "styled-components";
 
 import LogoImg from "../../assets/check-mark.png";
 
-export const SignupPageLayout = styled.div`
-  height: 100vh;
-`;
-
 export const Header = styled.div`
+  width: 100%;
   height: 70px;
   background-color: ${({ theme }) => theme.colors.blue};
   ${({ theme }) => theme.display.flex};
   justify-content: space-between;
+  box-shadow: 1px 2px 6px;
 `;
 
 export const Wrapper = styled.div`
