@@ -47,7 +47,8 @@ export async function action({ request }) {
     const data = await login(credentials);
     const { userId, sessionKey } = data;
 
-    return redirect(`/users/${userId}/M2/${sessionKey}`);
+    // sessionKey 쿠키 저장
+    return redirect(`/users/${userId}`);
   } catch (err) {
     return err;
   }
