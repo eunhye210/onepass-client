@@ -6,14 +6,16 @@ import Sidebar from "../../components/Sidebar";
 import MyPassword from "../../components/MyPassword";
 import ShowModal from "../../components/ShowModal";
 import MessageModal from "..//../components/MessageModal";
+import ConfirmMessageModal from "../../components/ConfirmMessageModal";
+import PasswordFileModal from "../../components/PasswordFileModal";
+import PasswordInfoModal from "../../components/PasswordInfoModal";
 
 import * as S from "./styles";
 
-// user 정보 받아오기
 function MyPage() {
   const { userId } = useParams();
   const [option, setOption] = useState("Passwords");
-  const { isModalOpen } = useSelector((state) => state.modal);
+  const { type, isModalOpen } = useSelector((state) => state.modal);
 
   return (
     <>
@@ -25,7 +27,10 @@ function MyPage() {
       </S.MyPageLayout>
       {isModalOpen && (
         <ShowModal>
-          <MessageModal />
+          {type === "message" && <MessageModal />}
+          {type === "confirmMessage" && <ConfirmMessageModal />}
+          {type === "file" && <PasswordFileModal />}
+          {type === "edit" && <PasswordInfoModal />}
         </ShowModal>
       )}
     </>

@@ -46,3 +46,32 @@ export async function addPassword(userId, passwordForm) {
     data: passwordForm,
   });
 }
+
+export async function getUserInfo(userId) {
+  return apiController({
+    url: `/users/${userId}`,
+    method: "get",
+  });
+}
+
+export async function deletePassword(userId, passwordId) {
+  return apiController({
+    url: `/users/${userId}/password/${passwordId}`,
+    method: "delete",
+  });
+}
+
+export async function getPassword(userId, passwordId) {
+  return apiController({
+    url: `/users/${userId}/password/${passwordId}`,
+    method: "get",
+  });
+}
+
+export async function updatePassword(userId, passwordId, password) {
+  return apiController({
+    url: `/users/${userId}/password/${passwordId}`,
+    method: "patch",
+    data: { password },
+  });
+}

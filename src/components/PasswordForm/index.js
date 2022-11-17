@@ -16,7 +16,7 @@ function PasswordForm() {
   useEffect(() => {
     if (data) {
       const { type, message } = data;
-      dispatch(setModalOpen({ title: type, message }));
+      dispatch(setModalOpen({ type: "message", title: type, message }));
     }
   }, [data, dispatch]);
 
@@ -51,9 +51,10 @@ export async function action({ params, request }) {
   const formData = await request.formData();
   const passwordForm = [
     {
-      url: formData.get("url"),
+      name: formData.get("url"),
       username: formData.get("username"),
       password: formData.get("password"),
+      checked: true,
     },
   ];
 
