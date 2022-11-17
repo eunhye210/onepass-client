@@ -56,6 +56,7 @@ export const InputFileLabel = styled.label.attrs((props) => ({
 
 export const InputFile = styled.input.attrs((props) => ({
   type: "file",
+  accept: ".csv",
   id: props.id,
   required: true,
 }))`

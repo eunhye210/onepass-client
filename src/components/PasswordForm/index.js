@@ -59,8 +59,8 @@ export async function action({ params, request }) {
 
   try {
     const result = await addPassword(userId, passwordForm);
-    return { type: "success", message: result };
+    return { type: "Success", message: result };
   } catch (err) {
-    return { type: "error", message: err };
+    return { type: "Error", message: err };
   }
 }
