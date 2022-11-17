@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 
 import csvFileToArray from "../../services/csvFileToArray";
-import { addPassword } from "../../services/apiRequests";
 import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
@@ -11,7 +9,6 @@ import * as S from "./styles";
 // file input reset 로직 필요
 function PasswordFile() {
   const dispatch = useDispatch();
-  const { userId } = useParams();
   const [file, setFile] = useState();
 
   const fileReader = new FileReader();
@@ -23,13 +20,7 @@ function PasswordFile() {
       fileReader.onload = async (event) => {
         const csvOutput = event.target.result;
         const csvArray = csvFileToArray(csvOutput);
-
-        try {
-          const result = await addPassword(userId, csvArray);
-          dispatch(setModalOpen({ title: "Success", message: result }));
-        } catch (err) {
-          dispatch(setModalOpen({ title: "Error", message: err }));
-        }
+        dispatch(setModalOpen({ type: "file", message: csvArray }));
       };
 
       fileReader.readAsText(file);

@@ -16,16 +16,3 @@ export const Wrapper = styled.div`
   width: 1000px;
   justify-content: space-between;
 `;
-
-export const Title = styled.h2`
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
-export const Section = styled.section`
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-`;

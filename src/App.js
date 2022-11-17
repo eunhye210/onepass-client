@@ -11,6 +11,7 @@ import Signup, { action as signupAction } from "./pages/Signup";
 import Login, { action as loginAction } from "./pages/Login";
 import OneTimePassword, { action as otpAction } from "./pages/OneTimePassword";
 import MyPage from "./pages/MyPage";
+import PasswordList from "./components/PasswordList";
 import PasswordForm, { action as formAction } from "./components/PasswordForm";
 
 import theme from "./theme";
@@ -22,8 +23,13 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} action={signupAction} />
       <Route path="/login" element={<Login />} action={loginAction} />
       <Route path="/otp" element={<OneTimePassword />} action={otpAction} />
-      <Route path="/users/:userId" element={<MyPage />}>
-        <Route path="password" element={<PasswordForm />} action={formAction} />
+      <Route path="/users" element={<MyPage />}>
+        <Route path=":userId" element={<PasswordList />} />
+        <Route
+          path=":userId/password"
+          element={<PasswordForm />}
+          action={formAction}
+        />
       </Route>
     </Route>
   )

@@ -16,6 +16,8 @@ function csvFileToArray(csvOutput) {
       return object;
     }, {});
 
+    obj["checked"] = false;
+
     csvArray.push(obj);
   });
 

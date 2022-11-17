@@ -1,3 +1,4 @@
+import PasswordList from "../PasswordList";
 import PasswordForm from "../PasswordForm";
 import PasswordFile from "../PasswordFile";
 
@@ -7,8 +8,7 @@ function MyPassword() {
   return (
     <S.MyPasswordPageLayout>
       <S.SectionBox>
-        <S.Title>My Passwords</S.Title>
-        <S.Section width="1000px" height="300px"></S.Section>
+        <PasswordList />
       </S.SectionBox>
       <S.SectionBox>
         <S.Wrapper>
