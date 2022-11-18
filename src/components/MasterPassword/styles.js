@@ -21,7 +21,6 @@ export const InputBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* margin-top: 50px; */
 `;
 
 export const Wrapper = styled.div`
@@ -42,7 +41,6 @@ export const Input = styled.input.attrs((props) => ({
   type: "text",
   name: props.name,
 }))`
-  /* width: ${(props) => props.width}; */
   width: 230px;
   height: 30px;
   margin-left: 10px;
@@ -59,7 +57,7 @@ export const Message = styled.div`
   margin-left: 30px;
   width: 500px;
   height: 40px;
-  color: ${(props) => props.type === "success" ? "#021691" : "#FF5349"}
+  color: ${(props) => (props.type === "success" ? "#021691" : "#FF5349")};
 `;
 
 export const Button = styled.button`
