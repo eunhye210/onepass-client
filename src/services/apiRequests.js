@@ -75,3 +75,11 @@ export async function updatePassword(userId, passwordId, password) {
     data: { password },
   });
 }
+
+export async function deleteAccount(userId, masterPassword) {
+  return apiController({
+    url: `users/${userId}/withdraw`,
+    method: "delete",
+    data: { masterPassword },
+  });
+}

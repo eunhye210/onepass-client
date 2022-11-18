@@ -56,12 +56,9 @@ export const Button = styled.button`
   height: 30px;
   border: none;
   border-radius: 5px;
-  background: #6c8dfa;
+  background: ${({ theme }) => theme.colors.blue};
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
-  :hover {
-    background: ${({ theme }) => theme.colors.blue};
-  }
 `;

@@ -40,9 +40,6 @@ export const Button = styled.button`
   font-weight: bold;
   color: #ffffff;
   cursor: pointer;
-  :hover {
-    background: ${(props) => props.hover};
-  }
 `;
 
 export const ItemName = styled.div`

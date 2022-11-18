@@ -1,7 +1,7 @@
 import * as S from "./styles";
 
 function Sidebar({ option, setOption }) {
-  const options = ["Passwords", "My Account", "Logout"];
+  const options = ["My Account", "Passwords", "Account Settings", "Logout"];
 
   return (
     <S.SidebarLayout>
@@ -17,7 +17,7 @@ function Sidebar({ option, setOption }) {
             selected={option === item}
             onClick={(e) => setOption(item)}
           >
-            <S.OptionTag selected={option === item} />
+            {/* <S.OptionTag selected={option === item} /> */}
             <S.OptionText selected={option === item}>{item}</S.OptionText>
           </S.OptionButton>
         ))}

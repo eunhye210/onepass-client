@@ -52,18 +52,10 @@ function PasswordList() {
               <S.ItemValue>{item.url}</S.ItemValue>
               <S.ItemValue>{item.username}</S.ItemValue>
               <S.ItemValue>********</S.ItemValue>
-              <S.Button
-                color="#6c8dfa"
-                hover="#021691"
-                onClick={() => editData(item)}
-              >
+              <S.Button color="#021691" onClick={() => editData(item)}>
                 Edit
               </S.Button>
-              <S.Button
-                color="#ff5349"
-                hover="#ff0d00"
-                onClick={() => deleteData(item)}
-              >
+              <S.Button color="#ff5349" onClick={() => deleteData(item)}>
                 Delete
               </S.Button>
             </S.ItemWrapper>
