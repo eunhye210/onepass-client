@@ -75,3 +75,19 @@ export async function updatePassword(userId, passwordId, password) {
     data: { password },
   });
 }
+
+export async function deleteAccount(userId, masterPassword) {
+  return apiController({
+    url: `users/${userId}/withdraw`,
+    method: "delete",
+    data: { masterPassword },
+  });
+}
+
+export async function changeMasterPassword(userId, srpData) {
+  return apiController({
+    url: `users/${userId}/reset-password`,
+    method: "patch",
+    data: srpData,
+  });
+}
