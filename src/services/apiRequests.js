@@ -91,3 +91,11 @@ export async function changeMasterPassword(userId, srpData) {
     data: srpData,
   });
 }
+
+export async function setPasswordStrength(userId, type) {
+  return apiController({
+    url: `users/${userId}/account/password-strength`,
+    method: "post",
+    data: { type },
+  });
+}
