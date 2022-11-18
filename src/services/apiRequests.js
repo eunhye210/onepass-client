@@ -83,3 +83,11 @@ export async function deleteAccount(userId, masterPassword) {
     data: { masterPassword },
   });
 }
+
+export async function changeMasterPassword(userId, srpData) {
+  return apiController({
+    url: `users/${userId}/reset-password`,
+    method: "patch",
+    data: srpData,
+  });
+}
