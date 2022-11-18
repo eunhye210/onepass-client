@@ -41,7 +41,6 @@ export const Input = styled.input.attrs((props) => ({
   type: "text",
   name: props.name,
 }))`
-  /* width: ${(props) => props.width}; */
   width: 230px;
   height: 30px;
   margin-left: 10px;
