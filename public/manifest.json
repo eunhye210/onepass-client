@@ -1,19 +1,20 @@
 {
   "name": "OnePass",
   "version": "0.1.0",
-  "manifest_verison": 3,
+  "manifest_version": 3,
   "description": "A password manager to help keep account safe and login easily.",
-  "permissions": ["tabs"],
+  "permissions": ["tabs", "storage", "cookies"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "assets/check-mark.png",
-      "24": "assets/check-mark.png",
-      "32": "assets/check-mark.png"
-    }
+  "default_popup": "popup.html",
+  "default_title": "OnePass",
+  "default_icon": {
+    "16": "images/check-mark.png",
+    "24": "images/check-mark.png",
+    "32": "images/check-mark.png"
   }
+}
 }
