@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import getActiveTabURL from "../../services/getActiveTabURL";
+
 import * as S from "./styles";
 
 function MainPopup() {
@@ -28,6 +30,14 @@ function MainPopup() {
       setPopupType(type);
     }
   });
+
+  const applyInput = async () => {
+    const currentTab = await getActiveTabURL();
+
+    chrome.tabs.sendMessage(currentTab.id, {
+      type: "SHOW",
+    });
+  };
 
   return (
     <S.MainPageLayout>
@@ -56,7 +66,7 @@ function MainPopup() {
                   {popupData.password}
                 </S.Message>
               </S.ItemWrapper>
-              <S.ApplyButton>Apply</S.ApplyButton>
+              <S.ApplyButton onClick={applyInput}>Apply</S.ApplyButton>
             </S.Item>
           </S.Content>
         </S.ContentBox>

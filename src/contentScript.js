@@ -1,41 +1,59 @@
 (() => {
   chrome.runtime.onMessage.addListener(async (message, sender, response) => {
-    const { currentUrl } = message;
+    const { type } = message;
 
-    const domain = currentUrl
-      .replace("http://", "")
-      .replace("https://", "")
-      .split(".")[1];
+    if (type === "TAB") {
+      const { currentUrl } = message;
 
-    chrome.storage.local.get(["userId"], async function (data) {
-      const { userId } = data;
+      const domain = currentUrl
+        .replace("http://", "")
+        .replace("https://", "")
+        .split(".")[1];
 
-      const res = await fetch(
-        `http://localhost:8080/users/${userId}/url/${domain}`
-      );
-      const result = await res.json();
+      chrome.storage.local.get(["userId"], async function (data) {
+        const { userId } = data;
 
-      if (res.status === 200) {
-        const { data } = result;
+        const res = await fetch(
+          `http://localhost:8080/users/${userId}/url/${domain}`
+        );
+        const result = await res.json();
 
-        chrome.storage.local.set({
-          type: "FOUND",
-          result: {
-            username: data.username,
-            password: data.password,
-          },
-        });
-      } else {
-        const { errorMessage } = result;
+        if (res.status === 200) {
+          const { data } = result;
 
-        chrome.storage.local.set({
-          type: "EMPTY",
-          result: { errorMessage },
-        });
+          chrome.storage.local.set({
+            type: "FOUND",
+            result: {
+              username: data.username,
+              password: data.password,
+            },
+          });
+        } else {
+          const { errorMessage } = result;
+
+          chrome.storage.local.set({
+            type: "EMPTY",
+            result: { errorMessage },
+          });
+        }
+      });
+    }
+
+    if (type === "SHOW") {
+      const inputs = document.getElementsByTagName("input");
+
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].type.toLowerCase() === "password") {
+          inputs[i - 1].value = "abcd";
+
+          chrome.storage.local.get(["result"], function (data) {
+            const { result } = data;
+
+            inputs[i - 1].value = result.username;
+            inputs[i].value = result.password;
+          });
+        }
       }
-    });
-
-    // (2) apply 버튼을 눌렀을 때
-    // -> input 창에 유저의 email과 password 정보가 입력되도록 하기
+    }
   });
 })();
