@@ -30,6 +30,7 @@ const copyPlugin = new CopyPlugin({
   patterns: [
     { from: "public", to: "" },
     { from: "src/background.js", to: "" },
+    { from: "src/contentScript.js", to: "" },
   ],
 });
 

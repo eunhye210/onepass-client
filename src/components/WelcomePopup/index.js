@@ -1,5 +1,6 @@
 /* global chrome */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { login, getVerifier } from "../../services/apiRequests";
 import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
@@ -7,6 +8,8 @@ import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorit
 import * as S from "./styles";
 
 function WelcomePopup() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
@@ -25,11 +28,14 @@ function WelcomePopup() {
       srpClient.step1(email, password);
       const credentials = srpClient.step2(salt, B);
       credentials["email"] = email;
-
       const data = await login(credentials);
-      const { userId, sessionKey } = data;
+      const { userId } = data; // { userId, sessionKey }
 
+      chrome.storage.local.set({
+        userId: userId,
+      });
       localStorage.setItem("userId", userId);
+      navigate("/main");
     } catch (err) {
       setError(err);
     }

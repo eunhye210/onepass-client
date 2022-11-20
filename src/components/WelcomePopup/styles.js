@@ -53,7 +53,7 @@ export const Input = styled.input.attrs((props) => ({
 
 export const Button = styled.button`
   width: 80px;
-  height: 35px;
+  height: 30px;
   border: none;
   border-radius: 5px;
   background: #b5b5b5;
