@@ -3,18 +3,35 @@
   "version": "0.1.0",
   "manifest_version": 3,
   "description": "A password manager to help keep account safe and login easily.",
-  "permissions": ["tabs", "storage", "cookies"],
-  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "images/check-mark.png",
+    "32": "images/check-mark.png",
+    "48": "images/check-mark.png",
+    "128": "images/check-mark.png"
+  },
+  "permissions": ["tabs", "storage", "cookies", "activeTab"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "resources": ["contentScript.js"]
+  }],
   "action": {
-  "default_popup": "popup.html",
-  "default_title": "OnePass",
-  "default_icon": {
-    "16": "images/check-mark.png",
-    "24": "images/check-mark.png",
-    "32": "images/check-mark.png"
+    "default_popup": "popup.html",
+    "default_title": "OnePass",
+    "default_icon": {
+      "16": "images/check-mark.png",
+      "32": "images/check-mark.png",
+      "48": "images/check-mark.png",
+      "128": "images/check-mark.png"
+    }
   }
-}
 }
