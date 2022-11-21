@@ -39,6 +39,13 @@ export async function login(loginData) {
   });
 }
 
+export async function logout() {
+  return apiController({
+    url: "/logout",
+    method: "post",
+  });
+}
+
 export async function addPassword(userId, passwordForm) {
   return apiController({
     url: `/users/${userId}/password`,

@@ -45,9 +45,8 @@ export async function action({ request }) {
     credentials["email"] = email;
 
     const data = await login(credentials);
-    const { userId, sessionKey } = data;
+    const { userId } = data;
 
-    // sessionKey 쿠키 저장
     return redirect(`/users/${userId}`);
   } catch (err) {
     return err;
