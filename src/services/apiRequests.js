@@ -99,10 +99,17 @@ export async function changeMasterPassword(userId, srpData) {
   });
 }
 
-export async function setPasswordStrength(userId, type) {
+export async function setAccountSetting(userId, data) {
   return apiController({
-    url: `users/${userId}/account/password-strength`,
+    url: `users/${userId}/account-setting`,
     method: "post",
-    data: { type },
+    data: data,
+  });
+}
+
+export async function getAccountSetting(userId) {
+  return apiController({
+    url: `users/${userId}/account-setting`,
+    method: "get",
   });
 }

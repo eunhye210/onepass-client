@@ -1,46 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { setModalOpen } from "../../store/slices/modalSlice";
-import { setPasswordStrength } from "../../services/apiRequests";
+import {
+  setAccountSetting,
+  getAccountSetting,
+} from "../../services/apiRequests";
 
 import * as S from "./styles";
 
-// geolocaton 너무 느림...
 function PasswordStrength() {
   const dispatch = useDispatch();
   const { userId } = useParams();
+  const { isModalOpen } = useSelector((state) => state.modal);
 
-  const [passwordOption, setPasswordOption] = useState("good");
-  const [restrictOption, setRestrictOption] = useState("disabled");
+  const [passwordOption, setPasswordOption] = useState();
+  const [sessionTimeout, setSessionTimeout] = useState();
 
-  const handlePassword = async () => {
+  useEffect(() => {
+    const getUserSettingInfo = async () => {
+      const data = await getAccountSetting(userId);
+      setPasswordOption(data.passwordOption);
+      setSessionTimeout(data.sessionTimeout);
+    };
+
+    getUserSettingInfo();
+  }, [isModalOpen]);
+
+  const handleOptions = async (type) => {
     try {
-      const data = await setPasswordStrength(userId, passwordOption);
+      const data = await setAccountSetting(userId, {
+        type: type,
+        option: type === "password-strength" ? passwordOption : sessionTimeout,
+      });
+
       dispatch(
         setModalOpen({ type: "message", title: "Success", message: data })
       );
     } catch (err) {
       dispatch(setModalOpen({ type: "message", title: "Error", message: err }));
     }
-  };
-
-  const handleRestriction = async () => {
-    const success = async (position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
-      const geoApiUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
-
-      const res = await fetch(geoApiUrl);
-      const data = await res.json();
-    };
-    const error = () => {
-      console.log("error!");
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error);
   };
 
   return (
@@ -51,6 +51,7 @@ function PasswordStrength() {
           <S.OptionName>Password Generator Option</S.OptionName>
           <S.Select
             name="passwordStrength"
+            value={passwordOption || ""}
             onChange={(e) => setPasswordOption(e.target.value)}
           >
             <S.Option value="good">Upper/Lowercase Letters & Numbers</S.Option>
@@ -59,20 +60,22 @@ function PasswordStrength() {
             </S.Option>
             <S.Option value="weak">Easy to Memorize (word-based)</S.Option>
           </S.Select>
-          <S.Button onClick={handlePassword}>OK</S.Button>
+          <S.Button onClick={() => handleOptions("password-strength")}>OK</S.Button>
         </S.Wrapper>
         <S.Wrapper>
-          <S.OptionName>Login Restriction by Country</S.OptionName>
+          <S.OptionName>Login Session Timeout</S.OptionName>
           <S.Select
             name="restrictLocation"
-            onChange={(e) => setRestrictOption(e.target.value)}
+            value={sessionTimeout || ""}
+            onChange={(e) => setSessionTimeout(e.target.value)}
           >
-            <S.Option value="disabled">Disabled</S.Option>
-            <S.Option value="currentLocation">
-              Current Location Country
-            </S.Option>
+            <S.Option value="1h">1h</S.Option>
+            <S.Option value="3h">3h</S.Option>
+            <S.Option value="6h">6h</S.Option>
+            <S.Option value="12h">12h</S.Option>
+            <S.Option value="unlimited">unlimited</S.Option>
           </S.Select>
-          <S.Button onClick={handleRestriction}>OK</S.Button>
+          <S.Button onClick={() => handleOptions("session-timeout")}>OK</S.Button>
         </S.Wrapper>
       </S.Section>
     </S.PasswordStrengthBox>

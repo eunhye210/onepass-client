@@ -16,7 +16,7 @@ import * as S from "./styles";
 
 function MyPage() {
   const { userId } = useParams();
-  const [option, setOption] = useState("My Account");
+  const [option, setOption] = useState("Passwords");
   const { type, isModalOpen } = useSelector((state) => state.modal);
 
   return (
@@ -24,7 +24,6 @@ function MyPage() {
       <S.MyPageLayout>
         <Sidebar option={option} setOption={setOption} />
         <S.Content>
-          {/* {option === "My Account" && <MyAccount />} */}
           {option === "Passwords" && <MyPassword userId={userId} />}
           {option === "Account Settings" && <AccountSettings />}
         </S.Content>
