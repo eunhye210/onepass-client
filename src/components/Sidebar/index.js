@@ -7,16 +7,12 @@ import * as S from "./styles";
 
 function Sidebar({ option, setOption }) {
   const navigate = useNavigate();
-  const options = ["My Account", "Passwords", "Account Settings", "Logout"];
+  const options = ["Passwords", "Account Settings", "Logout"];
 
   useEffect(() => {
     const deleteCookie = async () => {
-      try {
-        await logout();
-        navigate("/");
-      } catch (err) {
-        console.log(err);
-      }
+      await logout();
+      navigate("/");
     };
 
     option === "Logout" && deleteCookie();
