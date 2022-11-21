@@ -42,6 +42,11 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
+export const Message = styled.p`
+  font-size: 18px;
+  color: #424242;
+`;
+
 export const ItemName = styled.div`
   width: 240px;
   height: 35px;

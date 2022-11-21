@@ -6,7 +6,6 @@ import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
-// file input reset 로직 필요
 function PasswordFile() {
   const dispatch = useDispatch();
   const [file, setFile] = useState();
@@ -20,7 +19,9 @@ function PasswordFile() {
       fileReader.onload = async (event) => {
         const csvOutput = event.target.result;
         const csvArray = csvFileToArray(csvOutput);
+
         dispatch(setModalOpen({ type: "file", message: csvArray }));
+        setFile();
       };
 
       fileReader.readAsText(file);

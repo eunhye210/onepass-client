@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getUserInfo } from "../../services/apiRequests";
 import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
-// refresh 로직 필요
-// 없으면 head 보이지 않도록 수정
 function PasswordList() {
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const { isModalOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
     async function getUserData() {
@@ -21,7 +20,7 @@ function PasswordList() {
     }
 
     getUserData();
-  }, [userId]);
+  }, [userId, isModalOpen]);
 
   const editData = (item) => {
     dispatch(setModalOpen({ type: "edit", dataId: item.id }));
@@ -41,26 +40,33 @@ function PasswordList() {
     <>
       <S.Title>My Passwords</S.Title>
       <S.Section>
-        <S.Head>
-          <S.ItemName>URL</S.ItemName>
-          <S.ItemName>Username</S.ItemName>
-          <S.ItemName>Password</S.ItemName>
-        </S.Head>
-        <S.Body>
-          {data?.map((item, idx) => (
-            <S.ItemWrapper key={item.url + idx}>
-              <S.ItemValue>{item.url}</S.ItemValue>
-              <S.ItemValue>{item.username}</S.ItemValue>
-              <S.ItemValue>********</S.ItemValue>
-              <S.Button color="#021691" onClick={() => editData(item)}>
-                Edit
-              </S.Button>
-              <S.Button color="#ff5349" onClick={() => deleteData(item)}>
-                Delete
-              </S.Button>
-            </S.ItemWrapper>
-          ))}
-        </S.Body>
+        {data?.length === 0 && (
+          <S.Message>Empty. Add new password to your list !</S.Message>
+        )}
+        {data?.length > 0 && (
+          <>
+            <S.Head>
+              <S.ItemName>URL</S.ItemName>
+              <S.ItemName>Username</S.ItemName>
+              <S.ItemName>Password</S.ItemName>
+            </S.Head>
+            <S.Body>
+              {data?.map((item, idx) => (
+                <S.ItemWrapper key={item.url + idx}>
+                  <S.ItemValue>{item.url}</S.ItemValue>
+                  <S.ItemValue>{item.username}</S.ItemValue>
+                  <S.ItemValue>********</S.ItemValue>
+                  <S.Button color="#021691" onClick={() => editData(item)}>
+                    Edit
+                  </S.Button>
+                  <S.Button color="#ff5349" onClick={() => deleteData(item)}>
+                    Delete
+                  </S.Button>
+                </S.ItemWrapper>
+              ))}
+            </S.Body>
+          </>
+        )}
       </S.Section>
     </>
   );
