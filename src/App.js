@@ -23,13 +23,13 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} action={signupAction} />
       <Route path="/login" element={<Login />} action={loginAction} />
       <Route path="/otp" element={<OneTimePassword />} action={otpAction} />
-      <Route path="/users" element={<MyPage />}>
-        <Route path=":userId" element={<PasswordList />} />
+      <Route path="/users/:userId" element={<MyPage />}>
+        {/* <Route path=":userId" element={<PasswordList />} />
         <Route
           path=":userId/password"
           element={<PasswordForm />}
           action={formAction}
-        />
+        /> */}
       </Route>
     </Route>
   )

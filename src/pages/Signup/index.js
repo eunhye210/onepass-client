@@ -21,6 +21,7 @@ function Signup() {
   const data = useActionData();
   const dispatch = useDispatch();
   const { isModalOpen } = useSelector((state) => state.modal);
+
   const [error, setError] = useState();
   const [message, setMessage] = useState();
 

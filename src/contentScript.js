@@ -10,33 +10,35 @@
         .replace("https://", "")
         .split(".")[1];
 
-      chrome.storage.local.get(["userId"], async function (data) {
-        const { userId } = data;
+      if (domain !== undefined) {
+        chrome.storage.local.get(["userId"], async function (data) {
+          const { userId } = data;
 
-        const res = await fetch(
-          `http://localhost:8080/users/${userId}/url/${domain}`
-        );
-        const result = await res.json();
+          const res = await fetch(
+            `http://localhost:8080/users/${userId}/url/${domain}`
+          );
+          const result = await res.json();
 
-        if (res.status === 200) {
-          const { data } = result;
+          if (res.status === 200) {
+            const { data } = result;
 
-          chrome.storage.local.set({
-            type: "FOUND",
-            result: {
-              username: data.username,
-              password: data.password,
-            },
-          });
-        } else {
-          const { errorMessage } = result;
+            chrome.storage.local.set({
+              type: "FOUND",
+              result: {
+                username: data.username,
+                password: data.password,
+              },
+            });
+          } else {
+            const { errorMessage } = result;
 
-          chrome.storage.local.set({
-            type: "EMPTY",
-            result: { errorMessage },
-          });
-        }
-      });
+            chrome.storage.local.set({
+              type: "EMPTY",
+              result: { errorMessage },
+            });
+          }
+        });
+      }
     }
 
     if (type === "SHOW") {
