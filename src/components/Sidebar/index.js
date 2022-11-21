@@ -1,7 +1,26 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { logout } from "../../services/apiRequests";
+
 import * as S from "./styles";
 
 function Sidebar({ option, setOption }) {
+  const navigate = useNavigate();
   const options = ["My Account", "Passwords", "Account Settings", "Logout"];
+
+  useEffect(() => {
+    const deleteCookie = async () => {
+      try {
+        await logout();
+        navigate("/");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    option === "Logout" && deleteCookie();
+  }, [option]);
 
   return (
     <S.SidebarLayout>
@@ -17,7 +36,6 @@ function Sidebar({ option, setOption }) {
             selected={option === item}
             onClick={(e) => setOption(item)}
           >
-            {/* <S.OptionTag selected={option === item} /> */}
             <S.OptionText selected={option === item}>{item}</S.OptionText>
           </S.OptionButton>
         ))}

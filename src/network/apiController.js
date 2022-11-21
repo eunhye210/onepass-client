@@ -2,17 +2,12 @@ import axios from "axios";
 
 const apiController = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
+  withCredentials: true,
   timeout: 1000,
 });
 
 apiController.interceptors.request.use(
   function (config) {
-    // SRP에 맞게 수정 필요
-    const tokenData = "";
-    if (tokenData) {
-      config.headers["Authorization"] = `Bearer ${tokenData}`;
-    }
-
     return config;
   },
   function (error) {
@@ -26,6 +21,11 @@ apiController.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+
+      if (error.response.data.errorMessage === "Authentication error") {
+        window.location.href = "/";
+      }
+
       throw error.response.data.errorMessage;
     }
     throw error;
