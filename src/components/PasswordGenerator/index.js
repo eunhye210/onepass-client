@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getActiveTabURL from "../../services/getActiveTabURL";
-import { getRandomPassword } from "../../services/apiRequests";
+import { getRandomPassword, logout } from "../../services/apiRequests";
 
 import * as S from "./styles";
 
@@ -38,8 +38,10 @@ function PasswordGenerator() {
     });
   };
 
-  const logout = () => {
+  const handleLogout = async () => {
     chrome.storage.local.clear();
+    const userId = localStorage.getItem("userId");
+    await logout(userId);
     localStorage.removeItem("userId");
     navigate("/home");
   };
@@ -73,7 +75,7 @@ function PasswordGenerator() {
           </S.Message>
           <S.Link>OnePass</S.Link>
         </S.LinkWrapper>
-        <S.Button onClick={logout}>Logout</S.Button>
+        <S.Button onClick={handleLogout}>Logout</S.Button>
       </S.Footer>
     </S.PasswordGeneratorLayout>
   );

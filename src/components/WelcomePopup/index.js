@@ -29,10 +29,11 @@ function WelcomePopup() {
       const credentials = srpClient.step2(salt, B);
       credentials["email"] = email;
       const data = await login(credentials);
-      const { userId } = data;
+      const { userId, sessionKey } = data;
 
       chrome.storage.local.set({
         userId: userId,
+        sessionKey: sessionKey,
       });
       localStorage.setItem("userId", userId);
       navigate("/main");

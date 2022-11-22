@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getActiveTabURL from "../../services/getActiveTabURL";
+import { logout } from "../../services/apiRequests";
 
 import * as S from "./styles";
 
@@ -11,8 +12,10 @@ function MainPopup() {
   const [popupType, setPopupType] = useState("EMPTY");
   const [popupData, setPopupData] = useState();
 
-  const logout = () => {
+  const handleLogout = async () => {
     chrome.storage.local.clear();
+    const userId = localStorage.getItem("userId");
+    await logout(userId);
     localStorage.removeItem("userId");
     navigate("/home");
   };
@@ -89,7 +92,7 @@ function MainPopup() {
           </S.Message>
           <S.Link>OnePass</S.Link>
         </S.LinkWrapper>
-        <S.Button onClick={logout}>Logout</S.Button>
+        <S.Button onClick={handleLogout}>Logout</S.Button>
       </S.Footer>
     </S.MainPageLayout>
   );

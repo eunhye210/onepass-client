@@ -4,42 +4,50 @@
 
     if (type === "TAB") {
       const { currentUrl } = message;
-      console.log(currentUrl);
 
-      const domain = currentUrl
+      const domainArr = currentUrl
         .replace("http://", "")
         .replace("https://", "")
-        .split(".")[1];
+        .split(".");
 
+      const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
 
       if (domain !== undefined) {
-        chrome.storage.local.get(["userId"], async function (data) {
-          const { userId } = data;
+        chrome.storage.local.get(
+          ["userId", "sessionKey"],
+          async function (data) {
+            const { userId, sessionKey } = data;
 
-          const res = await fetch(
-            `http://localhost:8080/users/${userId}/url/${domain}`
-          );
-          const result = await res.json();
+            const res = await fetch(
+              `http://localhost:8080/users/${userId}/url/${domain}`,
+              {
+                headers: {
+                  Authorization: sessionKey,
+                },
+              }
+            );
+            const result = await res.json();
 
-          if (res.status === 200) {
-            const { data } = result;
+            if (res.status === 200) {
+              const { data } = result;
 
-            chrome.storage.local.set({
-              type: "FOUND",
-              result: {
-                username: data.username,
-                password: data.password,
-              },
-            });
-          } else {
-            const { errorMessage } = result;
+              chrome.storage.local.set({
+                type: "FOUND",
+                result: {
+                  username: data.username,
+                  password: data.password,
+                },
+              });
+            } else {
+              const { errorMessage } = result;
 
-            chrome.storage.local.set({
-              type: "EMPTY",
-              result: { errorMessage },
-            });
+              chrome.storage.local.set({
+                type: "EMPTY",
+                result: { errorMessage },
+              });
+            }
           }
-        });
+        );
       }
     }
 
@@ -48,7 +56,6 @@
 
       for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].type.toLowerCase() === "password") {
-
           chrome.storage.local.get(["result"], function (data) {
             const { result } = data;
 
@@ -64,7 +71,6 @@
 
       for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].type.toLowerCase() === "password") {
-
           chrome.storage.local.get(["result"], function (data) {
             const { result } = data;
 
