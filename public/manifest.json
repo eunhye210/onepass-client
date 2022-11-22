@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "manifest_version": 3,
   "description": "A password manager to help keep account safe and login easily.",
-  "iconss": {
+  "icons": {
     "16": "images/check-mark.png",
     "32": "images/check-mark.png",
     "48": "images/check-mark.png",

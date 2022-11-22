@@ -52,7 +52,6 @@ function MainPopup() {
           </S.Message>
           <S.Content>
             <S.Item>
-              <S.ItemImg />
               <S.ItemWrapper>
                 <S.Message size="15px" width="170px" color="#000000">
                   {popupData.username}
@@ -63,10 +62,10 @@ function MainPopup() {
                   font="bold"
                   color="#000000"
                 >
-                  {popupData.password}
+                  {"*".repeat(popupData.password.length)}
                 </S.Message>
               </S.ItemWrapper>
-              <S.ApplyButton onClick={applyInput}>Apply</S.ApplyButton>
+              <S.ApplyButton color="#ffffff" onClick={applyInput}>Apply</S.ApplyButton>
             </S.Item>
           </S.Content>
         </S.ContentBox>
@@ -76,7 +75,11 @@ function MainPopup() {
           <S.Message size="18px" width="350px" font="bold" color="#ffffff">
             No Data Found
           </S.Message>
-          <S.Content />
+          <S.Content>
+            <S.ApplyButton color="#edf2f7" onClick={() => navigate("/password")}>
+              Generate Password
+            </S.ApplyButton>
+          </S.Content>
         </S.ContentBox>
       )}
       <S.Footer>

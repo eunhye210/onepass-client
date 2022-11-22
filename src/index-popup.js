@@ -4,6 +4,7 @@ import { Routes, Route, MemoryRouter as Router } from "react-router-dom";
 
 import WelcomePopup from "./components/WelcomePopup";
 import MainPopup from "./components/MainPopup";
+import PasswordGenerator from "./components/PasswordGenerator";
 
 import "./index.css";
 
@@ -16,6 +17,7 @@ root.render(
       <Route path="/" element={isLogin ? <MainPopup /> : <WelcomePopup />} />
       <Route path="/home" element={<WelcomePopup />} />
       <Route path="/main" element={<MainPopup />} />
+      <Route path="/password" element={<PasswordGenerator />} />
     </Routes>
   </Router>
 );

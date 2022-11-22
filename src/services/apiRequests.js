@@ -39,9 +39,9 @@ export async function login(loginData) {
   });
 }
 
-export async function logout() {
+export async function logout(userId) {
   return apiController({
-    url: "/logout",
+    url: `/logout/${userId}`,
     method: "post",
   });
 }
@@ -125,5 +125,12 @@ export async function deleteOTP(email) {
   return apiController({
     url: `login/otp/${email}`,
     method: "delete",
+  });
+}
+
+export async function getRandomPassword(userId) {
+  return apiController({
+    url: `users/${userId}/random-password`,
+    method: "get",
   });
 }

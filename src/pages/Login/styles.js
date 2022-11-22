@@ -18,7 +18,7 @@ export const Title = styled.h1`
 `;
 
 export const Input = styled.input.attrs((props) => ({
-  type: "text",
+  type: props.type,
   name: props.name,
 }))`
   width: ${(props) => props.size}px;

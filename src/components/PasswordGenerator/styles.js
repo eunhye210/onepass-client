@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 import LogoImg from "../../assets/check-mark.png";
+import ReloadImg from "../../assets/reload.png";
 
-export const MainPageLayout = styled.div`
+export const PasswordGeneratorLayout = styled.div`
   width: 430px;
   height: 260px;
   background: #021691;
@@ -50,35 +51,6 @@ export const Message = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: scroll;
-  width: 350px;
-  height: 100px;
-  border-radius: 5px;
-  background: #ffffff;
-`;
-
-export const Item = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 80px;
-  background: #cdcdcd;
-  margin: 5px;
-`;
-
-export const ItemWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 50px;
-  width: 180px;
-`;
-
 export const Footer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -101,6 +73,27 @@ export const Link = styled.a.attrs(() => ({
   font-size: 15px;
 `;
 
+export const Button = styled.button`
+  margin-right: 10px;
+  margin-bottom: 20px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 100px;
+  border-radius: 5px;
+  background: #ffffff;
+`;
+
 export const ApplyButton = styled.button`
   height: 30px;
   border: none;
@@ -113,13 +106,16 @@ export const ApplyButton = styled.button`
   box-shadow: 0 0 5px 0 #000000;
 `;
 
-export const Button = styled.button`
-  margin-right: 10px;
-  margin-bottom: 20px;
+export const RefreshImg = styled.img.attrs({
+  src: `${ReloadImg}`,
+})`
+  width: 30px;
+  height: 30px;
+`;
+
+export const RefreshButton = styled.button`
+  margin-right: 5px;
   border: none;
   background: transparent;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: bold;
   cursor: pointer;
 `;

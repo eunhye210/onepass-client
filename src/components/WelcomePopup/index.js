@@ -29,7 +29,7 @@ function WelcomePopup() {
       const credentials = srpClient.step2(salt, B);
       credentials["email"] = email;
       const data = await login(credentials);
-      const { userId } = data; // { userId, sessionKey }
+      const { userId } = data;
 
       chrome.storage.local.set({
         userId: userId,
@@ -53,12 +53,14 @@ function WelcomePopup() {
         </S.Content>
         <S.Input
           name="email"
+          type="text"
           value={email || ""}
           placeholder="Email"
           onChange={handleInputValues}
         />
         <S.Input
           name="password"
+          type="password"
           value={password || ""}
           placeholder="Password"
           onChange={handleInputValues}

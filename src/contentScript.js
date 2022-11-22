@@ -4,11 +4,13 @@
 
     if (type === "TAB") {
       const { currentUrl } = message;
+      console.log(currentUrl);
 
       const domain = currentUrl
         .replace("http://", "")
         .replace("https://", "")
         .split(".")[1];
+
 
       if (domain !== undefined) {
         chrome.storage.local.get(["userId"], async function (data) {
@@ -46,12 +48,26 @@
 
       for (let i = 0; i < inputs.length; i++) {
         if (inputs[i].type.toLowerCase() === "password") {
-          inputs[i - 1].value = "abcd";
 
           chrome.storage.local.get(["result"], function (data) {
             const { result } = data;
 
             inputs[i - 1].value = result.username;
+            inputs[i].value = result.password;
+          });
+        }
+      }
+    }
+
+    if (type === "RANDOM") {
+      const inputs = document.getElementsByTagName("input");
+
+      for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].type.toLowerCase() === "password") {
+
+          chrome.storage.local.get(["result"], function (data) {
+            const { result } = data;
+
             inputs[i].value = result.password;
           });
         }

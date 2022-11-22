@@ -37,7 +37,7 @@ export const InputSection = styled.div`
 `;
 
 export const Input = styled.input.attrs((props) => ({
-  type: "text",
+  type: props.type,
   name: props.name,
 }))`
   width: 280px;
