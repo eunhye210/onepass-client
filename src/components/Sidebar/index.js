@@ -16,7 +16,7 @@ function Sidebar({ option, setOption }) {
     };
 
     option === "Logout" && deleteCookie();
-  }, [option]);
+  }, [option, navigate]);
 
   return (
     <S.SidebarLayout>

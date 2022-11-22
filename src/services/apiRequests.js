@@ -113,3 +113,17 @@ export async function getAccountSetting(userId) {
     method: "get",
   });
 }
+
+export async function checkOTP(email) {
+  return apiController({
+    url: `login/otp/${email}`,
+    method: "get",
+  });
+}
+
+export async function deleteOTP(email) {
+  return apiController({
+    url: `login/otp/${email}`,
+    method: "delete",
+  });
+}

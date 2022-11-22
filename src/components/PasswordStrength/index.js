@@ -26,7 +26,7 @@ function PasswordStrength() {
     };
 
     getUserSettingInfo();
-  }, [isModalOpen]);
+  }, [isModalOpen, userId]);
 
   const handleOptions = async (type) => {
     try {
@@ -60,7 +60,9 @@ function PasswordStrength() {
             </S.Option>
             <S.Option value="weak">Easy to Memorize (word-based)</S.Option>
           </S.Select>
-          <S.Button onClick={() => handleOptions("password-strength")}>OK</S.Button>
+          <S.Button onClick={() => handleOptions("password-strength")}>
+            OK
+          </S.Button>
         </S.Wrapper>
         <S.Wrapper>
           <S.OptionName>Login Session Timeout</S.OptionName>
@@ -75,7 +77,9 @@ function PasswordStrength() {
             <S.Option value="12h">12h</S.Option>
             <S.Option value="unlimited">unlimited</S.Option>
           </S.Select>
-          <S.Button onClick={() => handleOptions("session-timeout")}>OK</S.Button>
+          <S.Button onClick={() => handleOptions("session-timeout")}>
+            OK
+          </S.Button>
         </S.Wrapper>
       </S.Section>
     </S.PasswordStrengthBox>
