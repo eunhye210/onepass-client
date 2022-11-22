@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { logout } from "../../services/apiRequests";
 
@@ -7,16 +7,17 @@ import * as S from "./styles";
 
 function Sidebar({ option, setOption }) {
   const navigate = useNavigate();
+  const { userId } = useParams();
   const options = ["Passwords", "Account Settings", "Logout"];
 
   useEffect(() => {
     const deleteCookie = async () => {
-      await logout();
+      await logout(userId);
       navigate("/");
     };
 
     option === "Logout" && deleteCookie();
-  }, [option, navigate]);
+  }, [option, navigate, userId]);
 
   return (
     <S.SidebarLayout>

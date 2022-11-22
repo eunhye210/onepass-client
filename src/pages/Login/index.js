@@ -22,8 +22,8 @@ function Login() {
         <S.Content>
           <S.Title>Login</S.Title>
           {data && <S.ErrorMessage color="red">{data}</S.ErrorMessage>}
-          <S.Input size="350" name="email" placeholder="Email" />
-          <S.Input size="350" name="password" placeholder="Password" />
+          <S.Input size="350" type="text" name="email" placeholder="Email" />
+          <S.Input size="350" type="password" name="password" placeholder="Password" />
           <S.Link>Forgot Password ?</S.Link>
           <S.Button>Submit</S.Button>
         </S.Content>
