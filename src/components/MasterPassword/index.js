@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import {
@@ -8,11 +9,14 @@ import {
 } from "../../services/apiRequests";
 import validateNewPassordForm from "../../services/validateNewPasswordForm";
 import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
+import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
 function MasterPassword() {
   const { userId } = useParams();
+  const dispatch = useDispatch();
+
   const [result, setResult] = useState();
   const [confirmed, setConfirmed] = useState(false);
   const [passwords, setPassword] = useState({
@@ -58,7 +62,10 @@ function MasterPassword() {
 
   const changePassword = async () => {
     const errors = validateNewPassordForm(passwords);
-    errors.length > 0 && setResult({ type: "error", message: errors[0] });
+
+    if (errors.length > 0) {
+      return setResult({ type: "error", message: errors[0] });
+    }
 
     const srpClient = new SRP6JavascriptClientSessionSHA256();
     const salt = srpClient.generateRandomSalt();
@@ -66,16 +73,30 @@ function MasterPassword() {
 
     try {
       await changeMasterPassword(userId, { email, salt, verifier });
+      setPassword({
+        email: "",
+        newPassword: "",
+        currentPassword: "",
+        confirmPassword: "",
+      });
 
-      setResult({
-        type: "success",
-        message: "Your password has been changed successfully!",
-      });
+      setResult();
+      dispatch(
+        setModalOpen({
+          type: "message",
+          title: "Success",
+          message: "Your password has been changed successfully!",
+        })
+      );
     } catch (err) {
-      setResult({
-        type: "error",
-        message: "Internal error. Please try again.",
-      });
+      setResult();
+      dispatch(
+        setModalOpen({
+          type: "message",
+          title: "Error",
+          message: "Internal error. Please try again.",
+        })
+      );
     }
   };
 
