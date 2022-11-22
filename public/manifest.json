@@ -20,10 +20,12 @@
       "js": ["contentScript.js"]
     }
   ],
-  "web_accessible_resources": [{
-    "matches": ["http://*/*", "https://*/*"],
-    "resources": ["contentScript.js"]
-  }],
+  "web_accessible_resources": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "resources": ["contentScript.js"]
+    }
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_title": "OnePass",
