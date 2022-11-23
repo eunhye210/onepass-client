@@ -134,3 +134,10 @@ export async function getRandomPassword(userId) {
     method: "get",
   });
 }
+
+export async function checkUserURLData(userId, domain) {
+  return apiController({
+    url: `users/${userId}/url/${domain}`,
+    method: "get",
+  });
+}

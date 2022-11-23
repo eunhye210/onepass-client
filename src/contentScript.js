@@ -2,55 +2,6 @@
   chrome.runtime.onMessage.addListener(async (message, sender, response) => {
     const { type } = message;
 
-    if (type === "TAB") {
-      const { currentUrl } = message;
-
-      const domainArr = currentUrl
-        .replace("http://", "")
-        .replace("https://", "")
-        .split(".");
-
-      const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
-
-      if (domain !== undefined) {
-        chrome.storage.local.get(
-          ["userId", "sessionKey"],
-          async function (data) {
-            const { userId, sessionKey } = data;
-
-            const res = await fetch(
-              `http://localhost:8080/users/${userId}/url/${domain}`,
-              {
-                headers: {
-                  Authorization: sessionKey,
-                },
-              }
-            );
-            const result = await res.json();
-
-            if (res.status === 200) {
-              const { data } = result;
-
-              chrome.storage.local.set({
-                type: "FOUND",
-                result: {
-                  username: data.username,
-                  password: data.password,
-                },
-              });
-            } else {
-              const { errorMessage } = result;
-
-              chrome.storage.local.set({
-                type: "EMPTY",
-                result: { errorMessage },
-              });
-            }
-          }
-        );
-      }
-    }
-
     if (type === "SHOW") {
       const inputs = document.getElementsByTagName("input");
 
@@ -59,7 +10,9 @@
           chrome.storage.local.get(["result"], function (data) {
             const { result } = data;
 
-            inputs[i - 1].value = result.username;
+            if (i - 1 >= 0) {
+              inputs[i - 1].value = result.username;
+            }
             inputs[i].value = result.password;
           });
         }

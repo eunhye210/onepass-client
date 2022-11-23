@@ -3,34 +3,52 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getActiveTabURL from "../../services/getActiveTabURL";
-import { logout } from "../../services/apiRequests";
+import { logout, checkUserURLData } from "../../services/apiRequests";
 
 import * as S from "./styles";
 
 function MainPopup() {
   const navigate = useNavigate();
-  const [popupType, setPopupType] = useState("EMPTY");
+  const [popupType, setPopupType] = useState("LOADING");
   const [popupData, setPopupData] = useState();
+
+  const userId = localStorage.getItem("userId");
 
   const handleLogout = async () => {
     chrome.storage.local.clear();
-    const userId = localStorage.getItem("userId");
     await logout(userId);
     localStorage.removeItem("userId");
     navigate("/home");
   };
 
-  chrome.storage.local.get(["type", "result"], function (data) {
-    const { type, result } = data;
+  chrome.storage.local.get(["tabURL"], async function (data) {
+    const { tabURL } = data;
 
-    if (type === "FOUND") {
-      setPopupType(type);
-      setPopupData({
-        username: result.username,
-        password: result.password,
-      });
-    } else if (type === "EMPTY") {
-      setPopupType(type);
+    const domainArr = tabURL
+      .replace("http://", "")
+      .replace("https://", "")
+      .split(".");
+    const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
+
+    if (domain !== undefined) {
+      try {
+        const res = await checkUserURLData(userId, domain);
+
+        chrome.storage.local.set({
+          result: {
+            username: res.data.username,
+            password: res.data.password,
+          },
+        });
+
+        setPopupType("FOUND");
+        setPopupData({
+          username: res.data.username,
+          password: res.data.password,
+        });
+      } catch (err) {
+        setPopupType("EMPTY");
+      }
     }
   });
 
@@ -48,6 +66,13 @@ function MainPopup() {
         <S.Logo />
         <S.LogoName>OnePass</S.LogoName>
       </S.LogoWrapper>
+      {popupType === "LOADING" && (
+        <S.ContentBox>
+          <S.Message size="18px" width="170" font="bold" color="#ffffff">
+            Loading...
+          </S.Message>
+        </S.ContentBox>
+      )}
       {popupType === "FOUND" && (
         <S.ContentBox>
           <S.Message size="18px" width="350px" font="bold" color="#ffffff">
@@ -68,7 +93,9 @@ function MainPopup() {
                   {"*".repeat(popupData.password.length)}
                 </S.Message>
               </S.ItemWrapper>
-              <S.ApplyButton color="#ffffff" onClick={applyInput}>Apply</S.ApplyButton>
+              <S.ApplyButton color="#ffffff" onClick={applyInput}>
+                Apply
+              </S.ApplyButton>
             </S.Item>
           </S.Content>
         </S.ContentBox>
@@ -79,7 +106,10 @@ function MainPopup() {
             No Data Found
           </S.Message>
           <S.Content>
-            <S.ApplyButton color="#edf2f7" onClick={() => navigate("/password")}>
+            <S.ApplyButton
+              color="#edf2f7"
+              onClick={() => navigate("/password")}
+            >
               Generate Password
             </S.ApplyButton>
           </S.Content>
