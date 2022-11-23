@@ -1,4 +1,3 @@
-/* global chrome */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,12 +28,8 @@ function WelcomePopup() {
       const credentials = srpClient.step2(salt, B);
       credentials["email"] = email;
       const data = await login(credentials);
-      const { userId, sessionKey } = data;
+      const { userId } = data;
 
-      chrome.storage.local.set({
-        userId: userId,
-        sessionKey: sessionKey,
-      });
       localStorage.setItem("userId", userId);
       navigate("/main");
     } catch (err) {

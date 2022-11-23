@@ -31,6 +31,7 @@ export const LogoName = styled.div`
 
 export const ContentBox = styled.section`
   display: flex;
+  height: 135px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
