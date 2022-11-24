@@ -82,7 +82,7 @@ export const Content = styled.div`
 `;
 
 export const Link = styled.a.attrs(() => ({
-  href: "/", // 기본 홈페이지로 이동
+  href: "https://www.one-pass.co",
   target: "_blank",
 }))`
   margin-left: 5px;
