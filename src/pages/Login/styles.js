@@ -26,7 +26,7 @@ export const Input = styled.input.attrs((props) => ({
 `;
 
 export const Link = styled.a.attrs(() => ({
-  href: "/otp",
+  href: `${process.env.REACT_APP_SERVER_URL}/otp`,
 }))`
   margin-top: 20px;
   font-size: ${({ theme }) => theme.fontSizes.text};
