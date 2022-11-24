@@ -25,18 +25,19 @@ export const Input = styled.input.attrs((props) => ({
   ${({ theme }) => theme.common.mainInput};
 `;
 
-export const Link = styled.a.attrs(() => ({
-  href: `${process.env.REACT_APP_SERVER_URL}/otp`,
-}))`
-  margin-top: 20px;
-  font-size: ${({ theme }) => theme.fontSizes.text};
-  color: ${({ theme }) => theme.colors.blue};
-  text-decoration: none;
-`;
-
 export const Button = styled.button`
   width: 80px;
   height: 35px;
   margin-top: 30px;
   ${({ theme }) => theme.common.mainButton};
+`;
+
+export const Link = styled.button`
+  margin-top: 20px;
+  border: none;
+  background-color: transparent;
+  font-size: ${({ theme }) => theme.fontSizes.text};
+  color: ${({ theme }) => theme.colors.blue};
+  text-decoration: none;
+  cursor: pointer;
 `;
