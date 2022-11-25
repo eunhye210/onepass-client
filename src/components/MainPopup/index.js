@@ -45,7 +45,7 @@ function MainPopup() {
         }
       }
     });
-  }, []);
+  }, [userId]);
 
   const applyInput = async () => {
     const currentTab = await getActiveTabURL();
