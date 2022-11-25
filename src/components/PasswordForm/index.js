@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import CryptoJS from "crypto-js";
 import validator from "validator";
 
 import { setModalOpen } from "../../store/slices/modalSlice";
@@ -11,6 +13,7 @@ import * as S from "./styles";
 function PasswordForm() {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const { sessionKey } = useSelector((state) => state.user);
 
   const [formValues, setFormValues] = useState({
     name: "",
@@ -50,12 +53,13 @@ function PasswordForm() {
         );
       }
 
-      const result = await addPassword(userId, [
-        {
-          ...formValues,
-          checked: true,
-        },
-      ]);
+      const submitForm = [{ ...formValues, checked: true }];
+      const cipherText = CryptoJS.AES.encrypt(
+        JSON.stringify(submitForm),
+        sessionKey
+      ).toString();
+
+      const result = await addPassword(userId, cipherText);
 
       setFormValues({
         name: "",

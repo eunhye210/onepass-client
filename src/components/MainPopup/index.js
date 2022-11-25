@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import CryptoJS from "crypto-js";
+
 import getActiveTabURL from "../../services/getActiveTabURL";
 import { logout, checkUserURLData } from "../../services/apiRequests";
 
@@ -13,6 +15,7 @@ function MainPopup() {
   const [popupData, setPopupData] = useState();
 
   const userId = localStorage.getItem("userId");
+  const sessionKey = localStorage.getItem("sessionKey");
 
   useEffect(() => {
     chrome.storage.local.get(["tabURL"], async function (data) {
@@ -26,26 +29,28 @@ function MainPopup() {
 
       if (domain !== undefined) {
         try {
-          const res = await checkUserURLData(userId, domain);
+          const result = await checkUserURLData(userId, domain);
+          const bytes = CryptoJS.AES.decrypt(result, sessionKey);
+          const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
           chrome.storage.local.set({
             result: {
-              username: res.data.username,
-              password: res.data.password,
+              username: decryptedData.username,
+              password: decryptedData.password,
             },
           });
 
           setPopupType("FOUND");
           setPopupData({
-            username: res.data.username,
-            password: res.data.password,
+            username: decryptedData.username,
+            password: decryptedData.password,
           });
         } catch (err) {
           setPopupType("EMPTY");
         }
       }
     });
-  }, [userId]);
+  }, [userId, sessionKey]);
 
   const applyInput = async () => {
     const currentTab = await getActiveTabURL();
@@ -59,6 +64,7 @@ function MainPopup() {
     chrome.storage.local.clear();
     await logout(userId);
     localStorage.removeItem("userId");
+    localStorage.removeItem("sessionKey");
     navigate("/home");
   };
 

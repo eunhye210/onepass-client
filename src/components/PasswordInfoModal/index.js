@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+import CryptoJS from "crypto-js";
+
 import { getPassword, updatePassword } from "../../services/apiRequests";
 import { setModalClose } from "../../store/slices/modalSlice";
 
@@ -14,26 +16,36 @@ function PasswordInfoModal() {
   const [result, setResult] = useState();
   const [newPassword, setNewPassword] = useState();
   const [passwordInfo, setPasswordInfo] = useState();
+
   const { dataId } = useSelector((state) => state.modal);
+  const { sessionKey } = useSelector((state) => state.user);
 
   useEffect(() => {
     const getPasswordData = async () => {
-      const data = await getPassword(userId, dataId);
+      const result = await getPassword(userId, dataId);
+      const bytes = CryptoJS.AES.decrypt(result, sessionKey);
+      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
       setPasswordInfo({
-        id: data._id,
-        URL: data.name,
-        username: data.username,
-        password: data.password,
+        id: decryptedData._id,
+        URL: decryptedData.name,
+        username: decryptedData.username,
+        password: decryptedData.password,
       });
     };
 
     getPasswordData();
-  }, [userId, dataId]);
+  }, [userId, dataId, sessionKey]);
 
   const editPassword = async () => {
     try {
-      const result = await updatePassword(userId, passwordInfo.id, newPassword);
+      const cipherText = CryptoJS.AES.encrypt(
+        JSON.stringify(newPassword),
+        sessionKey
+      ).toString();
+
+      const result = await updatePassword(userId, passwordInfo.id, cipherText);
+
       setResult({ type: "success", message: result });
     } catch (err) {
       setResult({ type: "error", message: err });

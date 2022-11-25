@@ -21,7 +21,6 @@ apiController.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
-
       if (error.response.data.errorMessage === "Authentication error") {
         window.location.href = "https://www.one-pass.co";
       }
