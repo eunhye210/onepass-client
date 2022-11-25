@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getActiveTabURL from "../../services/getActiveTabURL";
-import {
-  logout,
-  getUserInfo,
-  checkUserURLData,
-} from "../../services/apiRequests";
+import { logout, checkUserURLData } from "../../services/apiRequests";
 
 import * as S from "./styles";
 
@@ -29,29 +25,23 @@ function MainPopup() {
       const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
 
       if (domain !== undefined) {
-        const userData = await getUserInfo(userId);
+        try {
+          const res = await checkUserURLData(userId, domain);
 
-        for (const item of userData) {
-          if (item.url.includes(domain)) {
-            const res = await checkUserURLData(userId, domain);
-
-            chrome.storage.local.set({
-              result: {
-                username: res.data.username,
-                password: res.data.password,
-              },
-            });
-
-            setPopupType("FOUND");
-            setPopupData({
+          chrome.storage.local.set({
+            result: {
               username: res.data.username,
               password: res.data.password,
-            });
+            },
+          });
 
-            break;
-          } else {
-            setPopupType("EMPTY");
-          }
+          setPopupType("FOUND");
+          setPopupData({
+            username: res.data.username,
+            password: res.data.password,
+          });
+        } catch (err) {
+          setPopupType("EMPTY");
         }
       }
     });
