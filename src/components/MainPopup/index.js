@@ -1,5 +1,5 @@
 /* global chrome */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import getActiveTabURL from "../../services/getActiveTabURL";
@@ -14,43 +14,38 @@ function MainPopup() {
 
   const userId = localStorage.getItem("userId");
 
-  const handleLogout = async () => {
-    chrome.storage.local.clear();
-    await logout(userId);
-    localStorage.removeItem("userId");
-    navigate("/home");
-  };
+  useEffect(() => {
+    chrome.storage.local.get(["tabURL"], async function (data) {
+      const { tabURL } = data;
 
-  chrome.storage.local.get(["tabURL"], async function (data) {
-    const { tabURL } = data;
+      const domainArr = tabURL
+        .replace("http://", "")
+        .replace("https://", "")
+        .split(".");
+      const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
 
-    const domainArr = tabURL
-      .replace("http://", "")
-      .replace("https://", "")
-      .split(".");
-    const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
+      if (domain !== undefined) {
+        try {
+          const res = await checkUserURLData(userId, domain);
 
-    if (domain !== undefined) {
-      try {
-        const res = await checkUserURLData(userId, domain);
+          chrome.storage.local.set({
+            result: {
+              username: res.data.username,
+              password: res.data.password,
+            },
+          });
 
-        chrome.storage.local.set({
-          result: {
+          setPopupType("FOUND");
+          setPopupData({
             username: res.data.username,
             password: res.data.password,
-          },
-        });
-
-        setPopupType("FOUND");
-        setPopupData({
-          username: res.data.username,
-          password: res.data.password,
-        });
-      } catch (err) {
-        setPopupType("EMPTY");
+          });
+        } catch (err) {
+          setPopupType("EMPTY");
+        }
       }
-    }
-  });
+    });
+  }, []);
 
   const applyInput = async () => {
     const currentTab = await getActiveTabURL();
@@ -58,6 +53,13 @@ function MainPopup() {
     chrome.tabs.sendMessage(currentTab.id, {
       type: "SHOW",
     });
+  };
+
+  const handleLogout = async () => {
+    chrome.storage.local.clear();
+    await logout(userId);
+    localStorage.removeItem("userId");
+    navigate("/home");
   };
 
   return (
