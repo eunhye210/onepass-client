@@ -49,7 +49,7 @@ const common = {
     border: 2px solid #021691;
     border-radius: 10px;
     font-size: 1em;
-  `
+  `,
 };
 
 const theme = {

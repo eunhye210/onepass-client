@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import CryptoJS from "crypto-js";
+
 import { getUserInfo } from "../../services/apiRequests";
 import { setModalOpen } from "../../store/slices/modalSlice";
 
@@ -10,17 +12,23 @@ import * as S from "./styles";
 function PasswordList() {
   const dispatch = useDispatch();
   const { userId } = useParams();
+
   const [data, setData] = useState([]);
+
+  const { sessionKey } = useSelector((state) => state.user);
   const { isModalOpen } = useSelector((state) => state.modal);
 
   useEffect(() => {
     async function getUserData() {
       const result = await getUserInfo(userId);
-      setData(result);
+      const bytes = CryptoJS.AES.decrypt(result, sessionKey);
+      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      setData(decryptedData);
     }
 
     getUserData();
-  }, [userId, isModalOpen]);
+  }, [userId, isModalOpen, sessionKey]);
 
   const editData = (item) => {
     dispatch(setModalOpen({ type: "edit", dataId: item.id }));

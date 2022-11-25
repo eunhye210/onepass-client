@@ -34,7 +34,7 @@ export const OptionName = styled.div`
 `;
 
 export const Select = styled.select.attrs((props) => ({
-  name: props.name
+  name: props.name,
 }))`
   margin: 10px;
   width: 200px;
@@ -42,7 +42,7 @@ export const Select = styled.select.attrs((props) => ({
 `;
 
 export const Option = styled.option.attrs((props) => ({
-  value: props.value
+  value: props.value,
 }))``;
 
 export const Button = styled.button`

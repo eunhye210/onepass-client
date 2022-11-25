@@ -46,11 +46,11 @@ export async function logout(userId) {
   });
 }
 
-export async function addPassword(userId, passwordForm) {
+export async function addPassword(userId, cipherText) {
   return apiController({
     url: `/users/${userId}/password`,
     method: "post",
-    data: passwordForm,
+    data: { cipherText },
   });
 }
 

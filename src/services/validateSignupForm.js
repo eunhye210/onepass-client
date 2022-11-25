@@ -1,5 +1,5 @@
 function validateSignupForm(signupForm) {
-  const { username, email, password, confirmPassword} = signupForm;
+  const { username, email, password, confirmPassword } = signupForm;
   const passwordRegex = /(?=.*\d)(?=.*[a-zA_Z]).{8}$/;
   const errors = [];
 
@@ -8,7 +8,9 @@ function validateSignupForm(signupForm) {
   }
 
   if (!passwordRegex.test(password)) {
-    errors.push("Password must contain letters and numbers and be at least 8 chars long.")
+    errors.push(
+      "Password must contain letters and numbers and be at least 8 chars long."
+    );
   }
 
   if (password !== confirmPassword) {

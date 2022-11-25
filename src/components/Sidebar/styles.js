@@ -47,7 +47,8 @@ export const OptionButton = styled.button.attrs((props) => ({
   border-radius: 5px;
   cursor: pointer;
   background: ${(props) => (props.selected ? "#e0e0e0" : "#ffffff")};
-  box-shadow: ${(props) => (props.selected ? "rgba(149, 157, 165, 0.2) 0px 8px 24px" : "none")};
+  box-shadow: ${(props) =>
+    props.selected ? "rgba(149, 157, 165, 0.2) 0px 8px 24px" : "none"};
   ${({ theme }) => theme.display.flexRowCenter};
 `;
 

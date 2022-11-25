@@ -39,10 +39,12 @@ function PasswordGenerator() {
   };
 
   const handleLogout = async () => {
-    chrome.storage.local.clear();
     const userId = localStorage.getItem("userId");
     await logout(userId);
+
+    chrome.storage.local.clear();
     localStorage.removeItem("userId");
+    localStorage.removeItem("sessionKey");
     navigate("/home");
   };
 

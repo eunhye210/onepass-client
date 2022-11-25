@@ -16,4 +16,3 @@ export const Wrapper = styled.div`
   width: 1000px;
   justify-content: space-between;
 `;
-

@@ -31,7 +31,9 @@ function WelcomePopup() {
       const { userId } = data;
 
       localStorage.setItem("userId", userId);
-      navigate("/main");
+      localStorage.setItem("sessionKey", srpClient.getSessionKey());
+
+      return navigate("/main");
     } catch (err) {
       setError(err);
     }

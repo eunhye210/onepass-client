@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+import CryptoJS from "crypto-js";
+
 import { addPassword } from "../../services/apiRequests";
 import { setModalClose } from "../../store/slices/modalSlice";
 
@@ -11,6 +13,7 @@ function PasswordFileModal() {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const { message } = useSelector((state) => state.modal);
+  const { sessionKey } = useSelector((state) => state.user);
 
   const [result, setResult] = useState();
   const [passwordFile, setPasswordFile] = useState();
@@ -29,7 +32,12 @@ function PasswordFileModal() {
 
   const handleSubmit = async () => {
     try {
-      const result = await addPassword(userId, passwordFile);
+      const cipherText = CryptoJS.AES.encrypt(
+        JSON.stringify(passwordFile),
+        sessionKey
+      ).toString();
+      const result = await addPassword(userId, cipherText);
+
       setResult({ type: "success", message: result });
     } catch (err) {
       setResult({ type: "error", message: err });
