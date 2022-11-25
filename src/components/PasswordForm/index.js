@@ -56,7 +56,6 @@ function PasswordForm() {
           checked: true,
         },
       ]);
-      console.log(result);
 
       setFormValues({
         name: "",
