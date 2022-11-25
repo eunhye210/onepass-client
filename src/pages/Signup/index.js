@@ -16,7 +16,6 @@ import { setModalOpen } from "../../store/slices/modalSlice";
 import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
 import * as S from "./styles";
 
-// 안전한 password 자동 생성 로직 추가
 function Signup() {
   const data = useActionData();
   const dispatch = useDispatch();
