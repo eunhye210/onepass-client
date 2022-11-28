@@ -10,21 +10,18 @@ function PasswordFile() {
   const dispatch = useDispatch();
   const [file, setFile] = useState();
 
-  const fileReader = new FileReader();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (file) {
-      fileReader.onload = async (event) => {
-        const csvOutput = event.target.result;
+      const fileReader = new FileReader();
+      fileReader.readAsText(file);
+
+      fileReader.onload = async (e) => {
+        const csvOutput = e.target.result;
         const csvArray = csvFileToArray(csvOutput);
 
         dispatch(setModalOpen({ type: "file", message: csvArray }));
         setFile();
       };
-
-      fileReader.readAsText(file);
     }
   };
 

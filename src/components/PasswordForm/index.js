@@ -2,17 +2,17 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import CryptoJS from "crypto-js";
 import validator from "validator";
 
-import { setModalOpen } from "../../store/slices/modalSlice";
 import { addPassword } from "../../services/apiRequests";
+import { encryptData } from "../../services/processCrypto";
+import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
 function PasswordForm() {
-  const { userId } = useParams();
   const dispatch = useDispatch();
+  const { userId } = useParams();
   const { sessionKey } = useSelector((state) => state.user);
 
   const [formValues, setFormValues] = useState({
@@ -32,32 +32,29 @@ function PasswordForm() {
   };
 
   const handleSubmit = async () => {
+    if (!name || !username || !password) {
+      return dispatch(
+        setModalOpen({
+          type: "message",
+          title: "Error",
+          message: "Please fill in the form.",
+        })
+      );
+    }
+
+    if (!validator.isURL(name)) {
+      return dispatch(
+        setModalOpen({
+          type: "message",
+          title: "Error",
+          message: "Invalid URL.",
+        })
+      );
+    }
+
     try {
-      if (!name || !username || !password) {
-        return dispatch(
-          setModalOpen({
-            type: "message",
-            title: "Error",
-            message: "Please fill in the form.",
-          })
-        );
-      }
-
-      if (!validator.isURL(name)) {
-        return dispatch(
-          setModalOpen({
-            type: "message",
-            title: "Error",
-            message: "Invalid URL.",
-          })
-        );
-      }
-
       const submitForm = [{ ...formValues, checked: true }];
-      const cipherText = CryptoJS.AES.encrypt(
-        JSON.stringify(submitForm),
-        sessionKey
-      ).toString();
+      const cipherText = encryptData(submitForm, sessionKey);
 
       const result = await addPassword(userId, cipherText);
 

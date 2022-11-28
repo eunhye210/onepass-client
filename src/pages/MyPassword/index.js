@@ -1,6 +1,6 @@
-import PasswordList from "../PasswordList";
-import PasswordForm from "../PasswordForm";
-import PasswordFile from "../PasswordFile";
+import PasswordList from "../../components/PasswordList";
+import PasswordForm from "../../components/PasswordForm";
+import PasswordFile from "../../components/PasswordFile";
 
 import * as S from "./styles";
 

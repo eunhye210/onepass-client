@@ -4,15 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import Header from "../../components/Header";
 
-import {
-  login,
-  getVerifier,
-  checkOTP,
-  deleteOTP,
-} from "../../services/apiRequests";
+import { checkOTP, deleteOTP } from "../../services/apiRequests";
+import srpLogin from "../../services/srpLogin";
 import { setSessionKey } from "../../store/slices/userSlice";
-
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
 
 import * as S from "./styles";
 
@@ -36,6 +30,7 @@ function Login() {
 
     try {
       const isOTP = await checkOTP(email);
+      console.log(isOTP, password);
 
       if (isOTP.type && isOTP.otp === password) {
         const data = await deleteOTP(email);
@@ -43,23 +38,19 @@ function Login() {
 
         return navigate(`/users/${userId}`);
       }
-
-      const result = await getVerifier(email);
-      const { salt, B } = JSON.parse(result);
-
-      const srpClient = new SRP6JavascriptClientSessionSHA256();
-      srpClient.step1(email, password);
-      const credentials = srpClient.step2(salt, B);
-      credentials["email"] = email;
-
-      const data = await login(credentials);
-      const { userId } = data;
-
-      dispatch(setSessionKey({ key: srpClient.getSessionKey() }));
-
-      return navigate(`/users/${userId}`);
     } catch (err) {
       setError(err);
+    }
+
+    const { type, result } = await srpLogin(email, password);
+
+    if (type === "success") {
+      const { data, sessionKey } = result;
+
+      dispatch(setSessionKey({ key: sessionKey }));
+      return navigate(`/users/${data.userId}`);
+    } else if (type === "error") {
+      setError(result);
     }
   };
 

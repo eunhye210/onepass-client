@@ -1,5 +1,4 @@
 /* global chrome */
-
 import { useNavigate } from "react-router-dom";
 
 import * as S from "./styles";

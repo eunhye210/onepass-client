@@ -1,6 +1,6 @@
-import MasterPassword from "../MasterPassword";
-import PasswordStrength from "../PasswordStrength";
-import Unregister from "../Unregister";
+import MasterPassword from "../../components/MasterPassword";
+import UserSettings from "../../components/UserSettings";
+import Unregister from "../../components/Unregister";
 
 import * as S from "./styles";
 
@@ -10,7 +10,7 @@ function AccountSettings() {
       <S.SectionBox>
         <S.Wrapper>
           <MasterPassword />
-          <PasswordStrength />
+          <UserSettings />
         </S.Wrapper>
       </S.SectionBox>
       <S.SectionBox>

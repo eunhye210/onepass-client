@@ -10,7 +10,7 @@ import {
 
 import * as S from "./styles";
 
-function PasswordStrength() {
+function UserSettings() {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const { isModalOpen } = useSelector((state) => state.modal);
@@ -21,6 +21,7 @@ function PasswordStrength() {
   useEffect(() => {
     const getUserSettingInfo = async () => {
       const data = await getAccountSetting(userId);
+
       setPasswordOption(data.passwordOption);
       setSessionTimeout(data.sessionTimeout);
     };
@@ -86,4 +87,4 @@ function PasswordStrength() {
   );
 }
 
-export default PasswordStrength;
+export default UserSettings;

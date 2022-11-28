@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import CryptoJS from "crypto-js";
-
 import { getUserInfo } from "../../services/apiRequests";
+import { decryptData } from "../../services/processCrypto";
 import { setModalOpen } from "../../store/slices/modalSlice";
 
 import * as S from "./styles";
@@ -21,8 +20,7 @@ function PasswordList() {
   useEffect(() => {
     async function getUserData() {
       const result = await getUserInfo(userId);
-      const bytes = CryptoJS.AES.decrypt(result, sessionKey);
-      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      const decryptedData = decryptData(result, sessionKey);
 
       setData(decryptedData);
     }

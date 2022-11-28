@@ -8,9 +8,9 @@ import {
   changeMasterPassword,
 } from "../../services/apiRequests";
 import validateNewPassordForm from "../../services/validateNewPasswordForm";
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
 import { setModalOpen } from "../../store/slices/modalSlice";
 
+import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
 import * as S from "./styles";
 
 function MasterPassword() {
@@ -25,10 +25,12 @@ function MasterPassword() {
     currentPassword: "",
     confirmPassword: "",
   });
+
   const { email, newPassword, currentPassword, confirmPassword } = passwords;
 
   const handleInputValues = (e) => {
     const { name, value } = e.target;
+
     setPassword({
       ...passwords,
       [name]: value,
