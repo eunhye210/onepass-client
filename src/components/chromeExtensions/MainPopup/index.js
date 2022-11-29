@@ -2,10 +2,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import CryptoJS from "crypto-js";
-
 import getActiveTabURL from "../../../services/getActiveTabURL";
 import { logout, checkUserURLData } from "../../../services/apiRequests";
+import { decryptData } from "../../../services/processCrypto";
 
 import * as S from "./styles";
 
@@ -25,13 +24,13 @@ function MainPopup() {
         .replace("http://", "")
         .replace("https://", "")
         .split(".");
+
       const domain = domainArr.length === 2 ? domainArr[0] : domainArr[1];
 
       if (domain !== undefined) {
         try {
           const result = await checkUserURLData(userId, domain);
-          const bytes = CryptoJS.AES.decrypt(result, sessionKey);
-          const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+          const decryptedData = decryptData(result, sessionKey);
 
           chrome.storage.local.set({
             result: {
@@ -63,6 +62,7 @@ function MainPopup() {
   const handleLogout = async () => {
     chrome.storage.local.clear();
     await logout(userId);
+
     localStorage.removeItem("userId");
     localStorage.removeItem("sessionKey");
     navigate("/home");

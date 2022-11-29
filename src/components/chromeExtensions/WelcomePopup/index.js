@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { login, getVerifier } from "../../../services/apiRequests";
-import SRP6JavascriptClientSessionSHA256 from "../../../constants/encryptionAlgorithms";
+import { srpLogin } from "../../../services/processSRP";
 
 import * as S from "./styles";
 
@@ -19,23 +18,16 @@ function WelcomePopup() {
   };
 
   const verifyLogin = async () => {
-    try {
-      const result = await getVerifier(email);
-      const { salt, B } = JSON.parse(result);
+    const { type, result } = await srpLogin(email, password);
+    const { data, sessionKey } = result;
 
-      const srpClient = new SRP6JavascriptClientSessionSHA256();
-      srpClient.step1(email, password);
-      const credentials = srpClient.step2(salt, B);
-      credentials["email"] = email;
-      const data = await login(credentials);
-      const { userId } = data;
-
-      localStorage.setItem("userId", userId);
-      localStorage.setItem("sessionKey", srpClient.getSessionKey());
+    if (type === "success") {
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("sessionKey", sessionKey);
 
       return navigate("/main");
-    } catch (err) {
-      setError(err);
+    } else {
+      setError(result);
     }
   };
 

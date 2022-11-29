@@ -15,8 +15,7 @@ function PasswordGenerator() {
   useEffect(() => {
     const generateRandomPassword = async () => {
       const userId = localStorage.getItem("userId");
-      const result = await getRandomPassword(userId);
-      const { data } = result;
+      const { data } = await getRandomPassword(userId);
       setRandomPassword(data);
     };
 

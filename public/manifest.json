@@ -9,7 +9,7 @@
     "48": "images/check-mark.png",
     "128": "images/check-mark.png"
   },
-  "permissions": ["tabs", "storage", "cookies", "activeTab"],
+  "permissions": ["tabs", "storage"],
   "host_permissions": ["http://*/*", "https://*/*"],
   "background": {
     "service_worker": "background.js"
