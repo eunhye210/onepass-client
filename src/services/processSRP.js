@@ -21,7 +21,7 @@ export async function srpLogin(email, password) {
   }
 }
 
-export function generateSaltAndVerifier(email, password) {
+export function srpSaltAndVerifier(email, password) {
   const srpClient = new SRP6JavascriptClientSessionSHA256();
   const salt = srpClient.generateRandomSalt();
   const verifier = srpClient.generateVerifier(salt, email, password);

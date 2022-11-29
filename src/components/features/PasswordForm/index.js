@@ -2,10 +2,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import validator from "validator";
-
 import { addPassword } from "../../../services/apiRequests";
 import { encryptData } from "../../../services/processCrypto";
+import { validatePasswordForm } from "../../../services/validateForms";
 import { setModalOpen } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
@@ -20,6 +19,7 @@ function PasswordForm() {
     username: "",
     password: "",
   });
+
   const { name, username, password } = formValues;
 
   const handleInputValues = (e) => {
@@ -32,22 +32,14 @@ function PasswordForm() {
   };
 
   const handleSubmit = async () => {
-    if (!name || !username || !password) {
-      return dispatch(
-        setModalOpen({
-          type: "message",
-          title: "Error",
-          message: "Please fill in the form.",
-        })
-      );
-    }
+    const errors = validatePasswordForm(name, username, password);
 
-    if (!validator.isURL(name)) {
+    if (errors.length > 0) {
       return dispatch(
         setModalOpen({
           type: "message",
           title: "Error",
-          message: "Invalid URL.",
+          message: errors[0],
         })
       );
     }

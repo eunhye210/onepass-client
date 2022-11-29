@@ -27,7 +27,7 @@ apiController.interceptors.response.use(
 
       throw error.response.data.errorMessage;
     }
-    throw error;
+    console.error(error);
   }
 );
 

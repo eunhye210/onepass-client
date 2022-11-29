@@ -15,12 +15,8 @@ function Unregister() {
       return;
     }
 
-    try {
-      await deleteAccount(userId);
-      navigate("/");
-    } catch (err) {
-      return;
-    }
+    await deleteAccount(userId);
+    navigate("/");
   };
 
   return (

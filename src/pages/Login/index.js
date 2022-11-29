@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/features/Header";
 
 import { checkOTP, deleteOTP } from "../../services/apiRequests";
-import srpLogin from "../../services/srpLogin";
+import { srpLogin } from "../../services/processSRP";
 import { setSessionKey } from "../../store/slices/userSlice";
 
 import * as S from "./styles";

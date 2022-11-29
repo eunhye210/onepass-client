@@ -1,5 +1,21 @@
-function validateNewPassordForm(signupForm) {
-  const { email, newPassword, confirmPassword } = signupForm;
+import validator from "validator";
+
+export function validatePasswordForm(name, username, password) {
+  const errors = [];
+
+  if (!name || !username || !password) {
+    errors.push("Please fill in the form.");
+  }
+
+  if (!validator.isURL(name)) {
+    errors.push("Invalid URL.");
+  }
+
+  return errors;
+}
+
+export function validateNewPasswordForm(userInfos) {
+  const { email, newPassword, confirmPassword } = userInfos;
   const passwordRegex = /(?=.*\d)(?=.*[a-zA_Z]).{8}$/;
   const errors = [];
 
@@ -19,5 +35,3 @@ function validateNewPassordForm(signupForm) {
 
   return errors;
 }
-
-export default validateNewPassordForm;

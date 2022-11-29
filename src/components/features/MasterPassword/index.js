@@ -2,15 +2,11 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import {
-  login,
-  getVerifier,
-  changeMasterPassword,
-} from "../../../services/apiRequests";
-import validateNewPassordForm from "../../../services/validateNewPasswordForm";
+import { changeMasterPassword } from "../../../services/apiRequests";
+import { validateNewPasswordForm } from "../../../services/validateForms";
+import { srpLogin, srpSaltAndVerifier } from "../../../services/processSRP";
 import { setModalOpen } from "../../../store/slices/modalSlice";
 
-import SRP6JavascriptClientSessionSHA256 from "../../../constants/encryptionAlgorithms";
 import * as S from "./styles";
 
 function MasterPassword() {
@@ -19,63 +15,49 @@ function MasterPassword() {
 
   const [result, setResult] = useState();
   const [confirmed, setConfirmed] = useState(false);
-  const [passwords, setPassword] = useState({
+  const [userInfos, setUserInfos] = useState({
     email: "",
     newPassword: "",
     currentPassword: "",
     confirmPassword: "",
   });
 
-  const { email, newPassword, currentPassword, confirmPassword } = passwords;
+  const { email, newPassword, currentPassword, confirmPassword } = userInfos;
 
   const handleInputValues = (e) => {
     const { name, value } = e.target;
 
-    setPassword({
-      ...passwords,
+    setUserInfos({
+      ...userInfos,
       [name]: value,
     });
   };
 
   const verifyCurrentPassword = async () => {
-    try {
-      const result = await getVerifier(email);
-      const { salt, B } = JSON.parse(result);
+    const { type } = await srpLogin(email, currentPassword);
 
-      const srpClient = new SRP6JavascriptClientSessionSHA256();
-      srpClient.step1(email, currentPassword);
-      const credentials = srpClient.step2(salt, B);
-      credentials["email"] = email;
-
-      await login(credentials);
-
-      setConfirmed(true);
-      setResult({
-        type: "success",
-        message: "Your current password is confirmed. Please continue.",
-      });
-    } catch (err) {
-      setResult({
-        type: "error",
-        message: "Incorrect password. Please try again.",
-      });
-    }
+    setConfirmed(type === "success");
+    setResult({
+      type,
+      message:
+        type === "success"
+          ? "Your current password is confirmed. Please continue."
+          : "Incorrect password. Please try again.",
+    });
   };
 
   const changePassword = async () => {
-    const errors = validateNewPassordForm(passwords);
+    const errors = validateNewPasswordForm(userInfos);
 
     if (errors.length > 0) {
       return setResult({ type: "error", message: errors[0] });
     }
 
-    const srpClient = new SRP6JavascriptClientSessionSHA256();
-    const salt = srpClient.generateRandomSalt();
-    const verifier = srpClient.generateVerifier(salt, email, newPassword);
+    const { salt, verifier } = srpSaltAndVerifier(email, newPassword);
 
     try {
       await changeMasterPassword(userId, { email, salt, verifier });
-      setPassword({
+      setUserInfos({
         email: "",
         newPassword: "",
         currentPassword: "",

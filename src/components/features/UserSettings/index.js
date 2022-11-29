@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setModalOpen } from "../../../store/slices/modalSlice";
 import {
   setAccountSetting,
   getAccountSetting,
 } from "../../../services/apiRequests";
+import { setModalOpen } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

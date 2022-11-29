@@ -12,7 +12,7 @@ import getEmailId from "../../services/getEmailId";
 import { signup } from "../../services/apiRequests";
 import { sendConfirmationCodeEmail } from "../../services/apiRequests";
 import validateSignupForm from "../../services/validateSignupForm";
-import { generateSaltAndVerifier } from "../../services/processSRP";
+import { srpSaltAndVerifier } from "../../services/processSRP";
 
 import { setModalOpen } from "../../store/slices/modalSlice";
 
@@ -135,7 +135,7 @@ export async function action({ request }) {
     return errors[0];
   }
 
-  const { salt, verifier } = generateSaltAndVerifier(email, password);
+  const { salt, verifier } = srpSaltAndVerifier(email, password);
 
   try {
     await signup({ username, email, verifier, salt });
