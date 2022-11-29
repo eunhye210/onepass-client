@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
-import { setModalClose } from "../../store/slices/modalSlice";
+import { setModalClose } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

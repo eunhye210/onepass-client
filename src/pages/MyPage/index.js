@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
-import MyPassword from "../MyPassword";
-import AccountSettings from "../AccountSettings";
+import MyPassword from "../../components/layout/MyPassword";
+import AccountSettings from "../../components/layout/AccountSettings";
 
 import Sidebar from "../../components/Sidebar";
 import ShowModal from "../../components/ShowModal";

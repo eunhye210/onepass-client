@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { deletePassword } from "../../services/apiRequests";
-import { setModalClose } from "../../store/slices/modalSlice";
+import { deletePassword } from "../../../services/apiRequests";
+import { setModalClose } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

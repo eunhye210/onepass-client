@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, redirect, useActionData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import validator from "validator";
 
 import Header from "../../components/Header";
@@ -11,9 +12,10 @@ import getEmailId from "../../services/getEmailId";
 import { signup } from "../../services/apiRequests";
 import { sendConfirmationCodeEmail } from "../../services/apiRequests";
 import validateSignupForm from "../../services/validateSignupForm";
+import { generateSaltAndVerifier } from "../../services/processSRP";
 
 import { setModalOpen } from "../../store/slices/modalSlice";
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
+
 import * as S from "./styles";
 
 function Signup() {
@@ -133,9 +135,7 @@ export async function action({ request }) {
     return errors[0];
   }
 
-  const srpClient = new SRP6JavascriptClientSessionSHA256();
-  const salt = srpClient.generateRandomSalt();
-  const verifier = srpClient.generateVerifier(salt, email, password);
+  const { salt, verifier } = generateSaltAndVerifier(email, password);
 
   try {
     await signup({ username, email, verifier, salt });

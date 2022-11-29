@@ -30,7 +30,6 @@ function Login() {
 
     try {
       const isOTP = await checkOTP(email);
-      console.log(isOTP, password);
 
       if (isOTP.type && isOTP.otp === password) {
         const data = await deleteOTP(email);
