@@ -1,6 +1,6 @@
-import MasterPassword from "../../components/MasterPassword";
-import UserSettings from "../../components/UserSettings";
-import Unregister from "../../components/Unregister";
+import MasterPassword from "../../features/MasterPassword";
+import UserSettings from "../../features/UserSettings";
+import Unregister from "../../features/Unregister";
 
 import * as S from "./styles";
 

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getPassword, updatePassword } from "../../services/apiRequests";
-import { encryptData, decryptData } from "../../services/processCrypto";
-import { setModalClose } from "../../store/slices/modalSlice";
+import { getPassword, updatePassword } from "../../../services/apiRequests";
+import { encryptData, decryptData } from "../../../services/processCrypto";
+import { setModalClose } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
@@ -21,6 +21,7 @@ function PasswordInfoModal() {
 
   useEffect(() => {
     const getPasswordData = async () => {
+      try {
       const result = await getPassword(userId, dataId);
       const decryptedData = decryptData(result, sessionKey);
 
@@ -30,6 +31,9 @@ function PasswordInfoModal() {
         username: decryptedData.username,
         password: decryptedData.password,
       });
+    } catch (err) {
+      setResult({ type: "error", message: err });
+    }
     };
 
     getPasswordData();

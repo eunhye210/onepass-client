@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addPassword } from "../../services/apiRequests";
-import { encryptData } from "../../services/processCrypto";
-import { setModalClose } from "../../store/slices/modalSlice";
+import { addPassword } from "../../../services/apiRequests";
+import { encryptData } from "../../../services/processCrypto";
+import { setModalClose } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 
