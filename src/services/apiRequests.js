@@ -121,10 +121,11 @@ export async function checkOTP(email) {
   });
 }
 
-export async function deleteOTP(email) {
+export async function deleteOTP(email, password) {
   return apiController({
     url: `login/otp/${email}`,
     method: "delete",
+    data: { OTP: password }
   });
 }
 

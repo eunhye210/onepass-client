@@ -7,9 +7,9 @@ import {
 import { ThemeProvider } from "styled-components";
 
 import Home from "./pages/Home";
-import Signup, { action as signupAction } from "./pages/Signup";
+import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import OneTimePassword, { action as otpAction } from "./pages/OneTimePassword";
+import OneTimePassword from "./pages/OneTimePassword";
 import MyPage from "./pages/MyPage";
 import NotFound from "./pages/NotFound";
 
@@ -19,9 +19,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Home />} />
-      <Route path="/signup" element={<Signup />} action={signupAction} />
+      <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/otp" element={<OneTimePassword />} action={otpAction} />
+      <Route path="/otp" element={<OneTimePassword />} />
       <Route path="/users/:userId" element={<MyPage />} />
       <Route path="*" element={<NotFound />} />
     </Route>

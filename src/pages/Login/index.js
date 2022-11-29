@@ -32,7 +32,7 @@ function Login() {
       const isOTP = await checkOTP(email);
 
       if (isOTP.type && isOTP.otp === password) {
-        const data = await deleteOTP(email);
+        const data = await deleteOTP(email, password);
         const { userId } = data;
 
         return navigate(`/users/${userId}`);

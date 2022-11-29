@@ -11,7 +11,7 @@ export const Content = styled.div`
 
 export const Message = styled.h1`
   color: #616161;
-  font-size: ${(props) => props.size};
+  font-size: 35px;
 `;
 
 export const SubMesssage = styled.h3`

@@ -14,7 +14,7 @@ export const Title = styled.h1`
 `;
 
 export const Message = styled.div`
-  color: ${(props) => props.color};
+  color: ${(props) => (props.type === "message" ? "blue" : "red")};
   margin-bottom: 10px;
 `;
 
@@ -32,9 +32,7 @@ export const Input = styled.input.attrs((props) => ({
   ${({ theme }) => theme.common.mainInput};
 `;
 
-export const Button = styled.button.attrs((props) => ({
-  type: props.type,
-}))`
+export const Button = styled.button`
   width: 80px;
   height: 35px;
   margin-top: ${(props) => (props.type === "submit" ? "20px" : "0px")};
