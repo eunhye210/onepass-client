@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { deleteAccount } from "../../services/apiRequests";
+import { deleteAccount } from "../../../services/apiRequests";
 
 import * as S from "./styles";
 

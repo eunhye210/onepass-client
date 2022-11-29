@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import csvFileToArray from "../../services/csvFileToArray";
-import { setModalOpen } from "../../store/slices/modalSlice";
+import csvFileToArray from "../../../services/csvFileToArray";
+import { setModalOpen } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

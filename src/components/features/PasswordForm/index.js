@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import validator from "validator";
 
-import { addPassword } from "../../services/apiRequests";
-import { encryptData } from "../../services/processCrypto";
-import { setModalOpen } from "../../store/slices/modalSlice";
+import { addPassword } from "../../../services/apiRequests";
+import { encryptData } from "../../../services/processCrypto";
+import { setModalOpen } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

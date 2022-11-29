@@ -4,12 +4,13 @@ import { useSelector } from "react-redux";
 import MyPassword from "../../components/layout/MyPassword";
 import AccountSettings from "../../components/layout/AccountSettings";
 
-import Sidebar from "../../components/Sidebar";
-import ShowModal from "../../components/ShowModal";
-import MessageModal from "..//../components/MessageModal";
-import ConfirmMessageModal from "../../components/ConfirmMessageModal";
-import PasswordFileModal from "../../components/PasswordFileModal";
-import PasswordInfoModal from "../../components/PasswordInfoModal";
+import Sidebar from "../../components/features/Sidebar";
+
+import ShowModal from "../../components/shared/ShowModal";
+import MessageModal from "..//../components/shared/MessageModal";
+import ConfirmMessageModal from "../../components/shared/ConfirmMessageModal";
+import PasswordFileModal from "../../components/shared/PasswordFileModal";
+import PasswordInfoModal from "../../components/shared/PasswordInfoModal";
 
 import * as S from "./styles";
 

@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import CryptoJS from "crypto-js";
 
-import getActiveTabURL from "../../services/getActiveTabURL";
-import { logout, checkUserURLData } from "../../services/apiRequests";
+import getActiveTabURL from "../../../services/getActiveTabURL";
+import { logout, checkUserURLData } from "../../../services/apiRequests";
 
 import * as S from "./styles";
 

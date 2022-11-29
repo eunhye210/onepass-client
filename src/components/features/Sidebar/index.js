@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { logout } from "../../services/apiRequests";
+import { logout } from "../../../services/apiRequests";
 
 import * as S from "./styles";
 

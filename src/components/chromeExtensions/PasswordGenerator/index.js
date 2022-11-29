@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import getActiveTabURL from "../../services/getActiveTabURL";
-import { getRandomPassword, logout } from "../../services/apiRequests";
+import getActiveTabURL from "../../../services/getActiveTabURL";
+import { getRandomPassword, logout } from "../../../services/apiRequests";
 
 import * as S from "./styles";
 

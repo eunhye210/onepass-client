@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../../components/Header";
+import Header from "../../components/features/Header";
 
 import { checkOTP, deleteOTP } from "../../services/apiRequests";
 import srpLogin from "../../services/srpLogin";

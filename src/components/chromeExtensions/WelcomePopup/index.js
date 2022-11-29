@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { login, getVerifier } from "../../services/apiRequests";
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
+import { login, getVerifier } from "../../../services/apiRequests";
+import SRP6JavascriptClientSessionSHA256 from "../../../constants/encryptionAlgorithms";
 
 import * as S from "./styles";
 

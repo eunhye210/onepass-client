@@ -6,11 +6,11 @@ import {
   login,
   getVerifier,
   changeMasterPassword,
-} from "../../services/apiRequests";
-import validateNewPassordForm from "../../services/validateNewPasswordForm";
-import { setModalOpen } from "../../store/slices/modalSlice";
+} from "../../../services/apiRequests";
+import validateNewPassordForm from "../../../services/validateNewPasswordForm";
+import { setModalOpen } from "../../../store/slices/modalSlice";
 
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
+import SRP6JavascriptClientSessionSHA256 from "../../../constants/encryptionAlgorithms";
 import * as S from "./styles";
 
 function MasterPassword() {

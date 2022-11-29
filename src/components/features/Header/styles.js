@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import LogoImg from "../../assets/check-mark.png";
+import LogoImg from "../../../assets/check-mark.png";
 
 export const Header = styled.div`
   width: 100%;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import LogoImg from "../../assets/check-mark.png";
-import ReloadImg from "../../assets/reload.png";
+import LogoImg from "../../../assets/check-mark.png";
+import ReloadImg from "../../../assets/reload.png";
 
 export const PasswordGeneratorLayout = styled.div`
   width: 430px;

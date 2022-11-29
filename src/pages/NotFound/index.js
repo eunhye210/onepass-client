@@ -1,4 +1,4 @@
-import Header from "../../components/Header";
+import Header from "../../components/features/Header";
 
 import * as S from "./styles";
 

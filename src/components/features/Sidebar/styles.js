@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import LogoImg from "../../assets/check-mark.png";
+import LogoImg from "../../../assets/check-mark.png";
 
 export const SidebarLayout = styled.div`
   width: 250px;

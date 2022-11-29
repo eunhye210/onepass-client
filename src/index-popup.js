@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Routes, Route, MemoryRouter as Router } from "react-router-dom";
 
-import WelcomePopup from "./components/WelcomePopup";
-import MainPopup from "./components/MainPopup";
-import PasswordGenerator from "./components/PasswordGenerator";
-import PopupError from "./components/PopupError";
+import WelcomePopup from "./components/chromeExtensions/WelcomePopup";
+import MainPopup from "./components/chromeExtensions/MainPopup";
+import PasswordGenerator from "./components/chromeExtensions/PasswordGenerator";
+import PopupError from "./components/chromeExtensions/PopupError";
 
 import "./index.css";
 

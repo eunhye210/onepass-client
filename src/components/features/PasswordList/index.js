@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUserInfo } from "../../services/apiRequests";
-import { decryptData } from "../../services/processCrypto";
-import { setModalOpen } from "../../store/slices/modalSlice";
+import { getUserInfo } from "../../../services/apiRequests";
+import { decryptData } from "../../../services/processCrypto";
+import { setModalOpen } from "../../../store/slices/modalSlice";
 
 import * as S from "./styles";
 

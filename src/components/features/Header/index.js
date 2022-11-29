@@ -12,9 +12,7 @@ function Header({ type }) {
         <S.LogoName>OnePass</S.LogoName>
       </S.Wrapper>
       <S.Wrapper>
-        {type !== "myPage" && (
-          <S.Button onClick={() => navigate("/")}>Home</S.Button>
-        )}
+        <S.Button onClick={() => navigate("/")}>Home</S.Button>
         {(type === "signup" || type === "otp") && (
           <S.Button onClick={() => navigate("/login")}>Login</S.Button>
         )}

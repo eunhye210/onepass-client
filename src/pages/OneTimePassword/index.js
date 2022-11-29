@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { Form, useActionData } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Header from "../../components/Header";
-import ShowModal from "../../components/ShowModal";
-import MessageModal from "../../components/MessageModal";
+import Header from "../../components/features/Header";
+import ShowModal from "../../components/shared/ShowModal";
+import MessageModal from "../../components/shared/MessageModal";
 
 import getEmailAddress from "../../services/getEmailAddress";
 import { requestOTP } from "../../services/apiRequests";

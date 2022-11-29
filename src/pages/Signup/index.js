@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import validator from "validator";
 
-import Header from "../../components/Header";
-import ShowModal from "../../components/ShowModal";
-import MessageModal from "../../components/MessageModal";
+import Header from "../../components/features/Header";
+import ShowModal from "../../components/shared/ShowModal";
+import MessageModal from "../../components/shared/MessageModal";
 
 import getEmailId from "../../services/getEmailId";
 import { signup } from "../../services/apiRequests";
