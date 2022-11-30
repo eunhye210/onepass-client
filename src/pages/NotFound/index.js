@@ -1,4 +1,4 @@
-import Header from "../../components/Header";
+import Header from "../../components/features/Header";
 
 import * as S from "./styles";
 
@@ -7,7 +7,7 @@ function NotFound() {
     <S.NotFoundPageLayout>
       <Header />
       <S.Content>
-        <S.Message size="70">404 Page Not Found</S.Message>
+        <S.Message>404 Page Not Found</S.Message>
         <S.SubMesssage>
           The page you requested could not be found.
         </S.SubMesssage>

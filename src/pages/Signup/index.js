@@ -1,41 +1,63 @@
 import { useState } from "react";
-import { Form, redirect, useActionData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import validator from "validator";
 
-import Header from "../../components/Header";
-import ShowModal from "../../components/ShowModal";
-import MessageModal from "../../components/MessageModal";
+import Header from "../../components/features/Header";
+import ShowModal from "../../components/shared/ShowModal";
+import MessageModal from "../../components/shared/MessageModal";
 
 import getEmailId from "../../services/getEmailId";
-import { signup } from "../../services/apiRequests";
-import { sendConfirmationCodeEmail } from "../../services/apiRequests";
-import validateSignupForm from "../../services/validateSignupForm";
+import { srpSaltAndVerifier } from "../../services/processSRP";
+import { validateSignupForm } from "../../services/validateForms";
+import { signup, sendConfirmationCodeEmail } from "../../services/apiRequests";
 
 import { setModalOpen } from "../../store/slices/modalSlice";
-import SRP6JavascriptClientSessionSHA256 from "../../constants/encryptionAlgorithms";
+
 import * as S from "./styles";
 
 function Signup() {
-  const data = useActionData();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isModalOpen } = useSelector((state) => state.modal);
 
-  const [error, setError] = useState();
   const [message, setMessage] = useState();
+  const [confirmed, setConfirmed] = useState(false);
 
-  const [email, setEmail] = useState();
-  const [confirmationCode, setConfirmationCode] = useState();
-  const [emailConfirmationCode, setEmailConfirmationCode] = useState();
+  const [signupForm, setSignupForm] = useState({
+    username: "",
+    email: "",
+    confirmationCode: "",
+    emailConfirmationCode: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const {
+    username,
+    email,
+    confirmationCode,
+    emailConfirmationCode,
+    password,
+    confirmPassword,
+  } = signupForm;
 
   const handleInputValues = (e) => {
     const { name, value } = e.target;
-    name === "email" ? setEmail(value) : setConfirmationCode(value);
+
+    setSignupForm({
+      ...signupForm,
+      [name]: value,
+    });
   };
 
   const verifyEmail = async () => {
     if (!validator.isEmail(email)) {
-      return setError("Invalid email address. Try again.");
+      return setMessage({
+        type: "error",
+        data: "Invalid email address. Try again.",
+      });
     }
 
     try {
@@ -48,68 +70,106 @@ function Signup() {
           message: `We've sent a confirmation email to ${emailId}. Please confirm your email by entering the Confirmation Code.`,
         })
       );
-      setError("");
-      setEmailConfirmationCode(data);
+
+      setMessage({ type: "error", data: "" });
+      setSignupForm({
+        ...signupForm,
+        emailConfirmationCode: data,
+      });
     } catch (err) {
-      setError(err);
+      setMessage({ type: "error", data: err });
     }
   };
 
   const confirmCode = () => {
     if (confirmationCode !== emailConfirmationCode) {
-      setMessage("");
-      return setError("Incorrect confirmation code. Please try again.");
+      return setMessage({
+        type: "error",
+        data: "Incorrect confirmation code. Please try again.",
+      });
     }
-    setError("");
-    setMessage("Your email is confirmed. Please continue.");
+
+    setConfirmed(true);
+    setMessage({
+      type: "message",
+      data: "Your email is confirmed. Please continue.",
+    });
+  };
+
+  const handleSubmit = async () => {
+    const errors = validateSignupForm({
+      username,
+      email,
+      password,
+      confirmPassword,
+    });
+
+    if (errors.length > 0) {
+      return setMessage({ type: "error", data: errors[0] });
+    }
+
+    const { salt, verifier } = srpSaltAndVerifier(email, password);
+
+    try {
+      await signup({ username, email, verifier, salt });
+      return navigate("/login");
+    } catch (err) {
+      return setMessage({ type: "error", data: err });
+    }
   };
 
   return (
     <>
       <S.SignupPageLayout>
         <Header type="signup" />
-        <Form method="post" action="/signup">
-          <S.Content>
-            <S.Title>Sign Up</S.Title>
-            {data && <S.Message color="red">{data}</S.Message>}
-            {error && <S.Message color="red">{error}</S.Message>}
-            {message && !data && <S.Message color="blue">{message}</S.Message>}
-            <S.Input size="350" name="username" placeholder="Username" />
-            <S.Wrapper>
-              <S.Input
-                size="250"
-                name="email"
-                value={email || ""}
-                placeholder="Email"
-                onChange={handleInputValues}
-              />
-              <S.Button type="button" onClick={(e) => verifyEmail(e)}>
-                verify
-              </S.Button>
-            </S.Wrapper>
-            <S.Wrapper>
-              <S.Input
-                size="250"
-                name="confirmationCode"
-                value={confirmationCode || ""}
-                placeholder="Confirmation Code"
-                onChange={handleInputValues}
-              />
-              <S.Button type="button" onClick={(e) => confirmCode(e)}>
-                submit
-              </S.Button>
-            </S.Wrapper>
-            <S.Input size="350" name="password" placeholder="Password" />
+        <S.Content>
+          <S.Title>Sign Up</S.Title>
+          {message && <S.Message type={message.type}>{message.data}</S.Message>}
+          <S.Input
+            size="350"
+            name="username"
+            value={username || ""}
+            placeholder="Username"
+            onChange={handleInputValues}
+          />
+          <S.Wrapper>
             <S.Input
-              size="350"
-              name="confirmPassword"
-              placeholder="ConfirmPassword"
+              size="250"
+              name="email"
+              value={email || ""}
+              placeholder="Email"
+              onChange={handleInputValues}
             />
-            <S.Button type="submit" disabled={message ? false : true}>
-              Submit
-            </S.Button>
-          </S.Content>
-        </Form>
+            <S.Button onClick={(e) => verifyEmail(e)}>verify</S.Button>
+          </S.Wrapper>
+          <S.Wrapper>
+            <S.Input
+              size="250"
+              name="confirmationCode"
+              value={confirmationCode || ""}
+              placeholder="Confirmation Code"
+              onChange={handleInputValues}
+            />
+            <S.Button onClick={(e) => confirmCode(e)}>submit</S.Button>
+          </S.Wrapper>
+          <S.Input
+            size="350"
+            name="password"
+            value={password || ""}
+            placeholder="Password"
+            onChange={handleInputValues}
+          />
+          <S.Input
+            size="350"
+            name="confirmPassword"
+            value={confirmPassword || ""}
+            placeholder="ConfirmPassword"
+            onChange={handleInputValues}
+          />
+          <S.Button type="submit" disabled={!confirmed} onClick={handleSubmit}>
+            Submit
+          </S.Button>
+        </S.Content>
       </S.SignupPageLayout>
       {isModalOpen && <ShowModal>{<MessageModal />}</ShowModal>}
     </>
@@ -117,31 +177,3 @@ function Signup() {
 }
 
 export default Signup;
-
-export async function action({ request }) {
-  const formData = await request.formData();
-  const signupForm = {
-    username: formData.get("username"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-    confirmPassword: formData.get("confirmPassword"),
-  };
-  const { username, email, password } = signupForm;
-
-  const errors = validateSignupForm(signupForm);
-  if (errors.length > 0) {
-    return errors[0];
-  }
-
-  const srpClient = new SRP6JavascriptClientSessionSHA256();
-  const salt = srpClient.generateRandomSalt();
-  const verifier = srpClient.generateVerifier(salt, email, password);
-
-  try {
-    await signup({ username, email, verifier, salt });
-  } catch (err) {
-    return err;
-  }
-
-  return redirect("/login");
-}
