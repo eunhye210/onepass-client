@@ -16,7 +16,7 @@ function PasswordFileModal() {
   const { sessionKey } = useSelector((state) => state.user);
 
   const [result, setResult] = useState();
-  const [passwordFile, setPasswordFile] = useState();
+  const [passwordFile, setPasswordFile] = useState(message);
 
   const handleCheckBox = (idx) => {
     setPasswordFile(
