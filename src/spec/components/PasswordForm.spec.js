@@ -14,7 +14,7 @@ describe("<PasswordForm />", () => {
     expect(screen.getByText("Add Password")).toBeInTheDocument();
   });
 
-  it("Should show URL, Username, Password input box", () => {
+  it("Should show URL, Username, Password label", () => {
     renderWithProviders(<PasswordForm />);
 
     expect(screen.getByText("URL")).toBeInTheDocument();

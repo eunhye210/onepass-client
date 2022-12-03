@@ -20,10 +20,10 @@ function UserSettings() {
 
   useEffect(() => {
     const getUserSettingInfo = async () => {
-      const data = await getAccountSetting(userId);
+      const { passwordOption, sessionTimeout } = await getAccountSetting(userId);
 
-      setPasswordOption(data.passwordOption);
-      setSessionTimeout(data.sessionTimeout);
+      setPasswordOption(passwordOption);
+      setSessionTimeout(sessionTimeout);
     };
 
     getUserSettingInfo();
