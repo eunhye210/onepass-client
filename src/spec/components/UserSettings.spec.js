@@ -11,7 +11,10 @@ jest.mock("../../services/apiRequests.js", () => ({
 
 describe("<UserSettings />", () => {
   it("'Settings' title should show", async () => {
-    getAccountSetting.mockReturnValue({ passwordOption: "good", sessionTimeout: "3h" });
+    getAccountSetting.mockReturnValue({
+      passwordOption: "good",
+      sessionTimeout: "3h",
+    });
     renderWithProviders(<UserSettings />);
 
     await waitFor(() => {
@@ -20,18 +23,30 @@ describe("<UserSettings />", () => {
   });
 
   it("Should have 3 password generator options", async () => {
-    getAccountSetting.mockReturnValue({ passwordOption: "good", sessionTimeout: "3h" });
+    getAccountSetting.mockReturnValue({
+      passwordOption: "good",
+      sessionTimeout: "3h",
+    });
     renderWithProviders(<UserSettings />);
 
     await waitFor(() => {
-      expect(screen.getByText("Upper/Lowercase Letters & Numbers")).toBeInTheDocument();
-      expect(screen.getByText("Upper/Lowercase Letters & Numbers & Symbols")).toBeInTheDocument();
-      expect(screen.getByText("Easy to Memorize (word-based)")).toBeInTheDocument();
+      expect(
+        screen.getByText("Upper/Lowercase Letters & Numbers")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("Upper/Lowercase Letters & Numbers & Symbols")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("Easy to Memorize (word-based)")
+      ).toBeInTheDocument();
     });
   });
 
   it("Should have 3 login session timeout options", async () => {
-    getAccountSetting.mockReturnValue({ passwordOption: "good", sessionTimeout: "3h" });
+    getAccountSetting.mockReturnValue({
+      passwordOption: "good",
+      sessionTimeout: "3h",
+    });
     renderWithProviders(<UserSettings />);
 
     await waitFor(() => {

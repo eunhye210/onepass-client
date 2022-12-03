@@ -10,7 +10,7 @@ jest.mock("../../services/apiRequests.js", () => ({
 }));
 
 jest.mock("../../services/processCrypto.js", () => ({
-  decryptData: jest.fn()
+  decryptData: jest.fn(),
 }));
 
 jest.mock("react-redux", () => ({
@@ -44,7 +44,13 @@ describe("<PasswordList />", () => {
   });
 
   it("Given Password list data should be shown", async () => {
-    decryptData.mockReturnValue([{ url: "www.test.com", username: "testUsername", password: "testPassword" }]);
+    decryptData.mockReturnValue([
+      {
+        url: "www.test.com",
+        username: "testUsername",
+        password: "testPassword",
+      },
+    ]);
     renderWithProviders(<PasswordList />);
 
     await waitFor(() => {

@@ -20,6 +20,9 @@ describe("<PasswordFile />", () => {
     renderWithProviders(<PasswordFile />);
 
     const linkElement = screen.getByRole("link");
-    expect(linkElement).toHaveAttribute("href", "https://support.google.com/chrome/answer/95606");
+    expect(linkElement).toHaveAttribute(
+      "href",
+      "https://support.google.com/chrome/answer/95606"
+    );
   });
 });

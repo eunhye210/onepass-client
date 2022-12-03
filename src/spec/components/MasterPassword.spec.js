@@ -20,12 +20,10 @@ jest.mock("../../services/validateForms.js", () => ({
 }));
 
 describe("<MasterPassword />", () => {
-  it("'Reset MasterPassword' title should show", async () => {
+  it("'Reset MasterPassword' title should show", () => {
     renderWithProviders(<MasterPassword />);
 
-    await waitFor(() => {
-      expect(screen.getByText("Reset MasterPassword")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Reset MasterPassword")).toBeInTheDocument();
   });
 
   it("Should show Email, Current Password, New Password, Confirm New Password label", () => {
