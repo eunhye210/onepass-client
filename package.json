@@ -17,8 +17,11 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "customize-cra": "^1.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "copy-webpack-plugin": "^6.3.2",
+    "customize-cra": "^1.0.0",
     "react-app-rewire-multiple-entry": "^2.2.3"
   },
   "scripts": {
