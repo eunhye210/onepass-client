@@ -22,7 +22,8 @@
     "@testing-library/user-event": "^14.4.3",
     "copy-webpack-plugin": "^6.3.2",
     "customize-cra": "^1.0.0",
-    "react-app-rewire-multiple-entry": "^2.2.3"
+    "react-app-rewire-multiple-entry": "^2.2.3",
+    "react-app-rewired": "^2.2.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
