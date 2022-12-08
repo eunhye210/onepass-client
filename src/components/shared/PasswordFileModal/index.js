@@ -13,7 +13,7 @@ function PasswordFileModal() {
   const { userId } = useParams();
 
   const { message } = useSelector((state) => state.modal);
-  const { sessionKey } = useSelector((state) => state.user);
+  const sessionKey = sessionStorage.getItem("sessionKey");
 
   const [result, setResult] = useState();
   const [passwordFile, setPasswordFile] = useState(message);

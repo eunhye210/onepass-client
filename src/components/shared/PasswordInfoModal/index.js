@@ -17,7 +17,7 @@ function PasswordInfoModal() {
   const [passwordInfo, setPasswordInfo] = useState();
 
   const { dataId } = useSelector((state) => state.modal);
-  const { sessionKey } = useSelector((state) => state.user);
+  const sessionKey = sessionStorage.getItem("sessionKey");
 
   useEffect(() => {
     const getPasswordData = async () => {

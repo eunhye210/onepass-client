@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addPassword } from "../../../services/apiRequests";
 import { encryptData } from "../../../services/processCrypto";
@@ -12,7 +12,8 @@ import * as S from "./styles";
 function PasswordForm() {
   const dispatch = useDispatch();
   const { userId } = useParams();
-  const { sessionKey } = useSelector((state) => state.user);
+
+  const sessionKey = sessionStorage.getItem("sessionKey");
 
   const [formValues, setFormValues] = useState({
     name: "",

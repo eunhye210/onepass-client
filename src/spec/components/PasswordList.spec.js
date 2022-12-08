@@ -13,18 +13,7 @@ jest.mock("../../services/processCrypto.js", () => ({
   decryptData: jest.fn(),
 }));
 
-jest.mock("react-redux", () => ({
-  ...jest.requireActual("react-redux"),
-  useSelector: jest.fn(),
-}));
-
 describe("<PasswordList />", () => {
-  beforeEach(() => {
-    jest.spyOn(reactRedux, "useSelector").mockReturnValue({
-      user: { sesisonKey: "sessionKey" },
-    });
-  });
-
   it("'My Passwords' title should show", async () => {
     renderWithProviders(<PasswordList />);
 

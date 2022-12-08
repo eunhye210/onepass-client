@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
+import Sidebar from "../../components/features/Sidebar";
 import MyPassword from "../../components/layout/MyPassword";
 import AccountSettings from "../../components/layout/AccountSettings";
-
-import Sidebar from "../../components/features/Sidebar";
 
 import ShowModal from "../../components/shared/ShowModal";
 import MessageModal from "..//../components/shared/MessageModal";
