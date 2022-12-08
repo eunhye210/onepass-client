@@ -1,10 +1,16 @@
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 
 import PasswordForm from "../../components/features/PasswordForm";
+import { addPassword } from "../../services/apiRequests";
+import { encryptData } from "../../services/processCrypto";
 import renderWithProviders from "../utils/test-utils";
 
 jest.mock("../../services/apiRequests.js", () => ({
   addPassword: jest.fn(),
+}));
+
+jest.mock("../../services/processCrypto.js", () => ({
+  encryptData: jest.fn(),
 }));
 
 describe("<PasswordForm />", () => {
@@ -39,6 +45,8 @@ describe("<PasswordForm />", () => {
   });
 
   it("Input box should be empty when Add button is clicked", async () => {
+    encryptData.mockReturnValue("cipherText");
+    addPassword.mockReturnValue("Success");
     renderWithProviders(<PasswordForm />);
 
     const inputElement = screen.getAllByRole("textbox");

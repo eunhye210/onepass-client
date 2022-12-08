@@ -8,7 +8,6 @@ import MessageModal from "../../components/shared/MessageModal";
 import getEmailAddress from "../../services/getEmailAddress";
 import { requestOTP } from "../../services/apiRequests";
 import { setModalOpen } from "../../store/slices/modalSlice";
-import { setSessionKey } from "../../store/slices/userSlice";
 
 import * as S from "./styles";
 
@@ -21,10 +20,10 @@ function OneTimePassword() {
   const handleSubmit = async () => {
     try {
       const { data} = await requestOTP({ email });
+      sessionStorage.setItem("sessionKey", data);
 
       const securedEmailAddress = getEmailAddress(email);
 
-      dispatch(setSessionKey({ key: data }));
       dispatch(
         setModalOpen({
           title: "Check your email",

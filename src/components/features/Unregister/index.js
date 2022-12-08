@@ -16,6 +16,7 @@ function Unregister() {
     }
 
     await deleteAccount(userId);
+    sessionStorage.clear();
     navigate("/");
   };
 

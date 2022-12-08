@@ -13,9 +13,9 @@ function PasswordList() {
   const { userId } = useParams();
 
   const [data, setData] = useState([]);
-
-  const { sessionKey } = useSelector((state) => state.user);
   const { isModalOpen } = useSelector((state) => state.modal);
+
+  const sessionKey = sessionStorage.getItem("sessionKey");
 
   useEffect(() => {
     async function getUserData() {
