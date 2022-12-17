@@ -1,6 +1,6 @@
 {
   "name": "OnePass",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "manifest_version": 3,
   "description": "A password manager to help keep account safe and login easily.",
   "icons": {
@@ -10,7 +10,7 @@
     "128": "images/check-mark.png"
   },
   "permissions": ["tabs", "storage"],
-  "host_permissions": ["http://*/*", "https://*/*"],
+  "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
   },
