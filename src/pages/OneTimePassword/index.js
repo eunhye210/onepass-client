@@ -19,7 +19,7 @@ function OneTimePassword() {
 
   const handleSubmit = async () => {
     try {
-      const { data} = await requestOTP({ email });
+      const { data } = await requestOTP({ email });
       sessionStorage.setItem("sessionKey", data);
 
       const securedEmailAddress = getEmailAddress(email);

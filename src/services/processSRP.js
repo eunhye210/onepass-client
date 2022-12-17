@@ -3,8 +3,7 @@ import SRP6JavascriptClientSessionSHA256 from "../constants/encryptionAlgorithms
 
 export async function srpLogin(email, password) {
   try {
-    const result = await getVerifier(email);
-    const { salt, B } = JSON.parse(result);
+    const { salt, B } = await getVerifier(email);
 
     const srpClient = new SRP6JavascriptClientSessionSHA256();
 
