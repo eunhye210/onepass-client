@@ -1,5 +1,4 @@
 import { screen, waitFor } from "@testing-library/react";
-import * as reactRedux from "react-redux";
 
 import PasswordList from "../../components/features/PasswordList";
 import { decryptData } from "../../services/processCrypto";
